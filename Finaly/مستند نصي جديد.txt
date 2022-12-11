@@ -1,0 +1,16 @@
+SELECT
+ Le_ID,
+ Le_Name,
+ P_Name,
+ Se_Name,
+ Su_Name
+ FROM subject
+ t1
+ INNER JOIN
+ program t2
+ ON t1.Se_ID = t2.P_ID
+ INNER JOIN
+ semester t3
+ ON t3.Se_ID = t1.Se_ID
+ INNER JOIN
+ lecturer t4 USING (Le_ID) 
