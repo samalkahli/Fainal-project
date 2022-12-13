@@ -61,7 +61,7 @@
             <div class="collapse" id="form-elementss">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="pages/add-subject">Add Subject</a></li>
-                <li class="nav-item"><a class="nav-link" href="manage-subject">manage Subject</a></li>
+                <li class="nav-item"><a class="nav-link" href="manage-subject.php">manage Subject</a></li>
               </ul>
           </li>
           <li class="nav-item nav-category">Program</li>

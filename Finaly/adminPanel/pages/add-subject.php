@@ -117,7 +117,7 @@ if (strlen($_SESSION['id']==0))
         if($r)
         {
           echo "<script>alert('Profile updated successfully');</script>";
-          echo "<script type='text/javascript'> document.location = '../index.php' </script>";
+          echo "<script type='text/javascript'> document.location = '../manage-subject.php' </script>";
 
         }
         

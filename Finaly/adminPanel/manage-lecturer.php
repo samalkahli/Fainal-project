@@ -14,7 +14,16 @@ if (strlen($_SESSION['id']==0))
         mysqli_query($conn,"delete from lecturer where Le_ID = '".$_GET['id']."'");
         echo '<script>alert("Lecturer Record Deleted Successfully !!")</script>';
         echo '<script>window.location.href=manage-lecturer.php</script>';
-              }?>
+        }
+        if(isset($_GET['pass']))
+      {
+        $password="Lecturer.123";
+        $newpass = $password;
+              mysqli_query($conn,"update lecturer set Le_Pass='$newpass' where Le_ID = '".$_GET['id']."'");
+              echo '<script>alert("Password Reset. New Password is Lecturer.123")</script>';
+        echo '<script>window.location.href=manage-students.php</script>';
+      } 
+              ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -145,6 +154,9 @@ if (strlen($_SESSION['id']==0))
                       <a href="manage-lecturer.php?id=<?php echo $row['Le_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
                       <button class="btn btn-danger">Delete</button>
                       </a>
+                      <a href="manage-lecturer.php?id=<?php echo $row['Le_ID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
+                                <button type="submit" name="submit" id="submit" class="btn" style="background-color: wheat;">Reset Password</button>
+                                </a>
                       </td>
 
                     </tr>

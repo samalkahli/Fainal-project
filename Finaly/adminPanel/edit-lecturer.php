@@ -9,16 +9,16 @@ if (strlen($_SESSION['id']==0))
   header('location:../outSession.php');
   }
   else{
+    $leid=intval($_GET['id']);
     if(isset($_POST['submit']))
     {
-        $leid=intval($_GET['id']);
+        
 
         $name=$_POST['name'];
         $birthday=$_POST['birthday'];
         $gender=$_POST['gender'];
         $degree=$_POST['degree'];
-        $semster=$_POST['semster'];
-        $Sname=$_POST['Sname'];
+        
         $queryy="UPDATE lecturer set
                         Le_Name ='$name',
                         Le_Birthday ='$birthday',
@@ -35,8 +35,9 @@ if (strlen($_SESSION['id']==0))
            echo "<script type='text/javascript'> document.location = 'manage-lecturer.php'; </script>";
             
     }
-    mysql_close($conn);
-    }
+
+    mysqli_close($conn);
+  }
     else
        ?>
 <!DOCTYPE html>
@@ -71,50 +72,7 @@ if (strlen($_SESSION['id']==0))
   <div class="container-scroller">
     
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar default-layout col-lg-12 col-12 p-0 d-flex align-items-top flex-row pt-5 mt-3">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        <div class="me-3">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
-            <span class="icon-menu"></span>
-          </button>
-        </div>
-        <div>
-          <a class="navbar-brand brand-logo" href="index.html">
-            <img src="images/logo.svg" alt="logo">
-          </a>
-          <a class="navbar-brand brand-logo-mini" href="index.html">
-            <img src="images/logo-mini.svg" alt="logo">
-          </a>
-        </div>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-top"> 
-        <ul class="navbar-nav">
-          <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold"><?php echo $result['Ad_Name']  ?></span></h1>
-          </li>
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          
-          
-          <li class="nav-item">
-            <form class="search-form" action="#">
-              <i class="icon-search"></i>
-              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-            </form>
-          </li>
-          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image"> </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-            
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
-              <a class="dropdown-item" href="../outSession.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
-            </div>
-          </li>
-        </ul>
-       
-      </div>
-    </nav>
+    <?php include('head.php'); ?>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
@@ -144,7 +102,8 @@ if (strlen($_SESSION['id']==0))
                     Le_Email,
                     Le_Degree
                      FROM lecturer t1
-                      ";
+                     where Le_ID ='$leid'";
+                      
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result)> 0)
@@ -162,29 +121,35 @@ if (strlen($_SESSION['id']==0))
                     </tr>
                   </thead>
                   <tbody>
-                  <?php while($row = mysqli_fetch_assoc($result))
-                {?>
+                  <?php $i=1;
+                $row = mysqli_fetch_assoc($result);
+                  
+                ?>
                     <tr>
-                    <td><?php echo $row['Le_ID']; ?></td>
+                    <td><?php echo $i; $i++; ?></td>
                       <td><input class="form-control" name="name" type="text" value="<?php echo $row['Le_Name']; ?>" required /></td>
                       <td><input type="date" name="birthday"  class="form-control" placeholder="Input Birhdate" autocomplete="off" value="<?php echo $row['Le_Birthday']; ?>" required /></td>
                       <td><?php echo $row['Le_Email']; ?></td>
-                      <td><select class="form-control" name="gender">
-              <option value="0"><?php echo $row['Le_Gender']; ?></option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select></td>
                       <td>
-            <select class="form-control" name="degree">
-            <option value="0"><?php echo $row['Le_Degree'];?></option>
-            <option value="Prof.">Prof.</option>
-            <option value="Doctor">Doctor</option>
-            <option value="Master">Master</option></select></td>
+                        <select class="form-control" name="gender">
+                        <option value="<?php echo $row['Le_Gender']; ?>"><?php echo $row['Le_Gender']; ?></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="form-control" name="degree">
+                        <option value="<?php echo $row['Le_Degree'];?>"><?php echo $row['Le_Degree'];?></option>
+                        <option value="Prof.">Prof.</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Master">Master</option>
+                        </select>
+                      </td>
                    </tr>
                     <?php
                   }
 
-                  }
+                  
                   else echo "You doesn't have any lecturer";?>
                             </tbody>
                             
