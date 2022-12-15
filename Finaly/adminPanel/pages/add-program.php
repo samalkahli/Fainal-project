@@ -18,30 +18,10 @@ if (strlen($_SESSION['id']==0))
     </script>
   <script src="../js/jquery.js"></script>
 
-    <script>
-    function getData(data)
-    {
-      //alert('ok');
-      if(data == 'dep')
-      {
-        //console.log( $('fact') );
-        var fact = document.getElementById('fact').value;
-        // alert(fact);
-        $("#dep").empty(); 
-        if(fact>0)
-        {
-          $.get("test.php?data=dep&fact="+fact, function(data, status)
-          {
-            //alert("Data: " + fact + "\nStatus: " + status); 
-              $("#dep").empty(); 
-              $('#dep').append(data);
-          });
-        }
-        else 
-        return false;  
-      }
-    }
-    </script>
+    
+  <script><?php include_once("../js/ajax.js")?></script>
+
+    
 </head>
 
 <body>
@@ -52,7 +32,6 @@ if (strlen($_SESSION['id']==0))
   #include(include_once('includes/config.php'));
   if(isset($_POST['submit']))
   {
-    include_once('../../includes/conn.php');
     $fuid=$_POST['department'];
     $errors = array();
     $department ='';
@@ -150,7 +129,7 @@ if (strlen($_SESSION['id']==0))
                     <option value="0">Select faculty:</option>
                     
                     <?php 
-              include_once('../../includes/conn.php');
+              include('../../includes/conn.php');
                 $selCourse = mysqli_query($conn,"SELECT * FROM faculty ORDER BY F_ID asc");
                 while ($selCourseRow = mysqli_fetch_assoc($selCourse)){ ?>
                   <option value="<?php echo $selCourseRow['F_ID']; ?>"><?php echo $selCourseRow['F_Name']; ?></option>
@@ -160,7 +139,7 @@ if (strlen($_SESSION['id']==0))
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="Last Name">Department</label>
-                  <select  class="form-control" name="department" id="dep">
+                  <select  class="form-control" name="department" id="department">
                    
 
                   </select>

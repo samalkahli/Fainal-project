@@ -150,30 +150,29 @@ if (strlen($_SESSION['id']==0))
               <form id="stripe-login">
                 <div class="field padding-bottom--24">
                   <label for="name">Full Name</label>
-                  <input type="text" name="name">
+                  <input type="text" name="name" required>
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="birthday">Birth Day</label>
-                  <input type="date" name="birthday" id="bdate" class="form-control" placeholder="Input Birhdate" autocomplete="off" >
+                  <input type="date" name="birthday" id="bdate" class="form-control" placeholder="Input Birhdate" autocomplete="off" required>
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="email">Email</label>
-                  <input type="email" name="email">
+                  <input type="email" name="email" required>
                 </div>
                 <div class=" padding-bottom--24">
                 <label>Gender</label>
-                  <input class="redio" type="radio" name="gender" value="Male"> Male
-                  <input class="redio" type="radio" name="gender" value="Famale">Famale
+                  <input class="redio" type="radio" name="gender" value="Male" required> Male
+                  <input class="redio" type="radio" name="gender" value="Famale" required>Famale
                 </div>
-                <div class=" padding-bottom--24">
+                <div class=" field-checkbox padding-bottom--24">
                 <label>Degree</label>
               
               <input class="redio" type="radio" name="degree" value="Prof.">Prof.</input>
               <input class="redio" type="radio" name="degree" value="Doctor">Doctor</input>
-              <input class="redio" type="radio" name="degree" value="Master">Master</input>
+              <input class="redio" type="radio" name="degree" value="Master">Master</input><br style="margin: 20px;">
+              <input class="redio" type="radio" name="degree" value="" >Other </input>
               
-
-            
                 </div>
                 <div class="field padding-bottom--24">
                   <div class="grid--50-50">
@@ -208,6 +207,16 @@ function myFunction() {
   } else {
     x.type = "password";
   }
+}
+function other()
+{
+  var idOther = document.getElementById("idOther");
+  var other = document.getElementById("other");
+  if(idOther){
+    hidden();
+    
+  }
+  
 }
 
 </script>

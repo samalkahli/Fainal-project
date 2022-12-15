@@ -94,15 +94,10 @@ if (strlen($_SESSION['id']==0))
                   <form method="post">
       
                   <?php
-                    $query= "SELECT
-                    subject.*,
-                    lecturer.Le_Name,
-                    lecturer.Le_ID
-                   
-                    FROM subject
-                        INNER JOIN lecturer ON 
-                        subject.Le_ID = lecturer.Le_ID
-                        where Su_ID='$leid'";
+                    $query= "SELECT `subject`.*, `lecturer`.`Le_Name`, `program`.`P_Name`
+                    FROM `subject` 
+                      INNER JOIN `lecturer` ON `subject`.`Le_ID` = `lecturer`.`Le_ID` 
+                      LEFT JOIN `program` ON `subject`.`P_ID` = `program`.`P_ID`";
 
                       $result = mysqli_query($conn,$query);
                       ?>
@@ -113,6 +108,7 @@ if (strlen($_SESSION['id']==0))
                       <th>Name</th>
                       <th>Semster</th>
                       <th>The lecturer</th>
+                      <th>The program</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -126,19 +122,21 @@ if (strlen($_SESSION['id']==0))
                       <td>
                         <select class="form-control" name="semster">
                         <option value="<?php echo $row['semster'];?>"><?php echo $row['semster'];?></option>
-                            <option value="1">one</option>
-                            <option value="2">two</option>
-                            <option value="3">three</option>
-                            <option value="4">four</option>
-                            <option value="5">five</option>
-                            <option value="6">six</option>
-                            <option value="7">seven</option>
-                            <option value="8">eight</option>
+                            <option value="one">one</option>
+                            <option value="two">two</option>
+                            <option value="three">three</option>
+                            <option value="four">four</option>
+                            <option value="five">five</option>
+                            <option value="six">six</option>
+                            <option value="seven">seven</option>
                         </select>
                       </td>
                       <td><select class="form-control" name="lecturer">
                         <option value="<?php echo $row['Le_ID'];?>"><?php echo $row['Le_Name'];?></option>
-                            <option value="<?php echo $row['Le_ID'];?>"><?php echo $row['Le_Name'];?></option>
+                        </td>
+                    
+                    <td><select class="form-control" name="program">
+                        <option value="<?php echo $row['P_ID'];?>"><?php echo $row['P_Name'];?></option>
                         </select></td>
                     </tr>
                     <?php

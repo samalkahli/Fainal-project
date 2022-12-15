@@ -15,70 +15,8 @@ if (strlen($_SESSION['id']==0))
   <title>Sign in</title>  
   <link rel="stylesheet" type="text/css" href="..\..\css\styleLogin.css">
   <script src="../js/jquery.js"></script>
-<script>
-    function getData(data)
-    {
-      //alert('ok');
-      if(data == 'dep')
-      {
-        //console.log( $('fact') );
-        var fact = document.getElementById('fact').value;
-        // alert(fact);
-        $("#department").empty();
-        if(fact>0)
-        {
-          $.get("getDepartment.php?data=dep&fact="+fact, function(data, status)
-          {
-            //alert("Data: " + fact + "\nStatus: " + status); 
-              $("#department").empty(); 
-              $('#department').append(data);
-          });
-        }
-        
-        else 
-        return false;
-        
-          
-      }
-      if(data == 'pro')
-      {
-        //console.log( $('fact') );
-        var department = document.getElementById('department').value;
-        //alert(department);
-        $("#program").empty();
-        if(department>0)
-        {
-          $.get("getProgram.php?data=pro&department="+department, function(data, status)
-          {
-            //alert("Data: " + fact + "\nStatus: " + status); 
-              $("#program").empty(); 
-              $('#program').append(data);
-          });
-        }
-        else 
-        return false;
-      }
-      if(data == 'sub')
-      {
-        //console.log( $('fact') );
-        var program = document.getElementById('program').value;
-        //alert(program);
-        $("#subject").empty();
-        if(program>0)
-        {
-          $.get("getSubject.php?data=sub&program="+program, function(data, status)
-          {
-            //alert("Data: " + fact + "\nStatus: " + status); 
-              $("#subject").empty(); 
-              $('#subject').append(data);
-          });
-        }
-        else 
-        return false;
-      }
+  <script><?php include_once("../js/ajax.js")?></script>
 
-    }
-    </script>
 </head>
 
 <body>
@@ -162,10 +100,8 @@ if (strlen($_SESSION['id']==0))
   ?>
   <form action="" method="post">
   <div class="login-root">
-    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
-      <div class="loginbackground box-background--white padding-top--64">
-        
-      </div>
+    <div class="box-background--white box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+
       <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
        <div class="formbg-outer">
        <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
@@ -206,6 +142,19 @@ if (strlen($_SESSION['id']==0))
                   </select>
                 </div>
                 <div class="field padding-bottom--24">
+                <label>Semster</label>
+                <select  class="form-control" name="semster" id="semster" onchange="getData('sem')" >
+                <option value="1">one</option>
+                <option value="2">two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
+                <option value="5">five</option>
+                <option value="6">six</option>
+                <option value="7">seven</option>
+                   </select>
+                  
+            </div>
+                <div class="field padding-bottom--24">
                   <label for="subject">Subject</label>
                   <select  class="form-control" name="subject" id="subject" >
                    
@@ -213,15 +162,7 @@ if (strlen($_SESSION['id']==0))
                   </select>
                 </div>
              
-                <div class=" padding-bottom--24">
-                <label>Semster</label>
-                 <input type="radio" id="html" name="fav_language" value="HTML"> HTML
-                  <input type="radio" id="css" name="fav_language" value="CSS">CSS
-
-                  <input type="radio" id="javascript" name="fav_language" value="JavaScript">JS
-                  
-                  
-            </div>
+                
             
             <div class="field padding-bottom--24">
             <label>Lecturer</label>

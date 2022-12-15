@@ -15,51 +15,8 @@ if (strlen($_SESSION['id']==0))
   <title>Sign in</title>  
   <link rel="stylesheet" type="text/css" href="..\..\css\styleLogin.css">
   <script src="../js/jquery.js"></script>
-<script>
-    function getData(data)
-    {
-      //alert('ok');
-      if(data == 'dep')
-      {
-        //console.log( $('fact') );
-        var fact = document.getElementById('fact').value;
-        // alert(fact);
-        $("#department").empty();
-        if(fact>0)
-        {
-          $.get("getDepartment.php?data=dep&fact="+fact, function(data, status)
-          {
-            //alert("Data: " + fact + "\nStatus: " + status); 
-              $("#department").empty(); 
-              $('#department').append(data);
-          });
-        }
-        
-        else 
-        return false;
-        
-          
-      }
-      if(data == 'pro')
-      {
-        //console.log( $('fact') );
-        var department = document.getElementById('department').value;
-        //alert(department);
-        $("#program").empty();
-        if(department>0)
-        {
-          $.get("getProgram.php?data=pro&department="+department, function(data, status)
-          {
-            //alert("Data: " + fact + "\nStatus: " + status); 
-              $("#program").empty(); 
-              $('#program').append(data);
-          });
-        }
-        else 
-        return false;
-      }
-    }
-    </script>
+  <script><?php include_once("../js/ajax.js")?></script>
+
 </head>
 
 <body>
@@ -198,7 +155,6 @@ if (strlen($_SESSION['id']==0))
               <option value="5">five</option>
               <option value="6">six</option>
               <option value="7">seven</option>
-              <option value="8">eight</option>
             </select>
                 </div>
             
