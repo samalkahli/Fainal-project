@@ -11,7 +11,7 @@ function getData(data)
     {
       $.get("getDepartment.php?data=dep&fact="+fact, function(data, status)
       {
-            //alert("Data: " + fact + "\nStatus: " + status); 
+        //alert("Data: " + fact + "\nStatus: " + status); 
           $("#department").empty(); 
           $('#department').append(data);
       });
@@ -19,8 +19,7 @@ function getData(data)
     
     else 
     return false;
-    
-          
+           
   }
   if(data == 'pro')
   {
@@ -32,7 +31,7 @@ function getData(data)
     {
       $.get("getProgram.php?data=pro&department="+department, function(data, status)
       {
-            //alert("Data: " + fact + "\nStatus: " + status); 
+        //alert("Data: " + fact + "\nStatus: " + status); 
           $("#program").empty(); 
           $('#program').append(data);
       });
@@ -50,7 +49,7 @@ function getData(data)
     {
       $.get("getSubject.php?data=sub&program="+program, function(data, status)
       {
-            //alert("Data: " + fact + "\nStatus: " + status); 
+        //alert("Data: " + fact + "\nStatus: " + status); 
           $("#subject").empty(); 
           $('#subject').append(data);
       });
@@ -62,13 +61,14 @@ function getData(data)
   {
     //console.log( $('fact') );
     var semster = document.getElementById('semster').value;
-    //alert(program);
+    var program = document.getElementById('program').value;
+    //alert(semster);
     $("#subject").empty();
     if(semster>0)
     {
-      $.get("getSubject.php?data=sem&semster="+semster, function(data, status)
+      $.get("getSubject.php?data=sem&semster="+semster+"&program="+program, function(data, status)
       {
-            //alert("Data: " + fact + "\nStatus: " + status); 
+        //alert("Data: " + fact + "\nStatus: " + status); 
           $("#subject").empty(); 
           $('#subject').append(data);
       });

@@ -8,36 +8,33 @@ if (strlen($_SESSION['id']==0))
   {
   header('location:../outSession.php');
   }
-  else{
+  else{ 
     $leid=intval($_GET['id']);
     if(isset($_POST['submit']))
     {
         
 
-        $name=$_POST['name'];
-        $semster=$_POST['semster'];
-        $lecturer=$_POST['lecturer'];
+        $type=$_POST['type'];
+        $time=$_POST['time'];
         
-        $queryy="UPDATE subject set
-                        Su_Name ='$name',
-                        semster ='$semster',
-                        Le_ID ='$lecturer'
+        $queryy="UPDATE exam set
+                        Ex_type ='$type',
+                        Ex_Duration ='$time',
+                        Ex_Date =NOW()
                         where
-                        Su_ID ='$leid'";
+                        Ex_ID ='$leid'";
 
 
         $res=mysqli_query($conn,$queryy);
     if($res)
     {
         echo "<script>alert('Profile updated successfully');</script>";
-           echo "<script type='text/javascript'> document.location = 'manage-subject.php'; </script>";
+           echo "<script type='text/javascript'> document.location = 'manage-exam.php'; </script>";
             
     }
 
     
-  }
-    else
-       ?>
+  }?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,6 +78,7 @@ if (strlen($_SESSION['id']==0))
       <!-- partial:partials/_sidebar.html -->
       <?php include('sidebar.php'); ?>
       <!-- partial -->
+      
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
@@ -88,27 +86,27 @@ if (strlen($_SESSION['id']==0))
               <!-- here the code-->
               <div class="card">
                 <div class="card-body">
-                <form method="post">
                 <h4 class="card-title">Subject Table</h4>
                   <div class="table-responsive">
-                  <form method="post">
-      
+                    <form method="post">
                   <?php
-                    $query= "SELECT `subject`.*, `lecturer`.`Le_Name`, `program`.`P_Name`
-                    FROM `subject` 
-                      INNER JOIN `lecturer` ON `subject`.`Le_ID` = `lecturer`.`Le_ID` 
-                      LEFT JOIN `program` ON `subject`.`P_ID` = `program`.`P_ID`";
+                    $query= "SELECT exam.*, subject.*
+                    FROM exam
+                    LEFT JOIN subject on exam.Su_ID = subject.Su_ID where Ex_ID='$leid'";
 
                       $result = mysqli_query($conn,$query);
-                      ?>
+                      if(mysqli_num_rows($result) > 0)
+                      {
+                        ?>
                 <table class="table">
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Name</th>
-                      <th>Semster</th>
-                      <th>The lecturer</th>
                       <th>The program</th>
+                      <th>Type Of Exam</th>
+                      <th>Limit Time</th>
+                      <th>Date Of Created</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -118,37 +116,46 @@ if (strlen($_SESSION['id']==0))
                 {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
-                      <td><input name="name" class="form-control" value="<?php echo $row['Su_Name']; ?>" required /></td>
+                      <td><input class="form-control" name=program value="<?php echo $row['Su_Name'];?>" ></td>
                       <td>
-                        <select class="form-control" name="semster">
-                          <option value="<?php echo $row['semster'];?>"><?php echo $row['semster'];?></option>
-                          <option value="1">one</option>
-                          <option value="2">two</option>
-                          <option value="3">three</option>
-                          <option value="4">four</option>
-                          <option value="5">five</option>
-                          <option value="6">six</option>
-                          <option value="7">seven</option>
-                        </select>
-                      </td>
-                      <td><select class="form-control" name="lecturer">
-                        <option value="<?php echo $row['Le_ID'];?>"><?php echo $row['Le_Name'];?></option>
-                        </td>
-                    
-                    <td><select class="form-control" name="program">
-                        <option value="<?php echo $row['P_ID'];?>"><?php echo $row['P_Name'];?></option>
-                        </select></td>
+                        <select class="form-control" name="type">
+                        <option value="<?php echo $row['Ex_Type'];?>"><?php echo $row['Ex_Type'];?>
+                        <option value="Sem Fainal">Sem Fainal</option>
+                        <option value="Test">Test</option>
+                        <option value="Fainal">Fainal</option> 
+
+            </select>
+                    </td>
+                      <td>
+                      <select class="form-control" name="time" required>
+              <option value="<?php echo $row['Ex_Duration']; ?>"><?php echo $row['Ex_Duration']." Minutes"; ?></option>
+              <option value="10">10 Minutes</option> 
+              <option value="20">20 Minutes</option> 
+              <option value="30">30 Minutes</option> 
+              <option value="40">40 Minutes</option> 
+              <option value="50">50 Minutes</option> 
+              <option value="60">60 Minutes</option> 
+            </select></td>
+                      <td><?php echo $row['Ex_Date']; ?></td>
+                      
+                      
+                      
+
                     </tr>
                     <?php
-                  
+                  }
 
-                  }?>
-
-                  </tbody>
+                  }
+                  else echo "You doesn't have any Subject";?>
+                            </tbody>
+                    </table>
                     </table>
                     <button name="submit" type="submit"  class="btn btn-primary"  onClick="return confirm('Are you sure you want to update')"><i class="fa fa-edit "></i> update</button> 
 
                   </div>
+                </form>
+
+                </div>
                 </div>
               </div>
             </div>
@@ -165,7 +172,7 @@ if (strlen($_SESSION['id']==0))
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-</form>
+
   <!-- container-scroller -->
 
   <!-- plugins:js -->

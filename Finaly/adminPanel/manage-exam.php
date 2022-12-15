@@ -11,7 +11,7 @@ if (strlen($_SESSION['id']==0))
   else{ 
         if(isset($_GET['del']))
         {
-        mysqli_query($conn,"delete from lecturer where Le_ID = '".$_GET['id']."'");
+        mysqli_query($conn,"delete from subject where Su_ID =".$_GET['id']);
         echo '<script>alert("Lecturer Record Deleted Successfully !!")</script>';
         echo '<script>window.location.href=manage-lecturer.php</script>';
               }?>
@@ -44,53 +44,11 @@ if (strlen($_SESSION['id']==0))
   <link rel="shortcut icon" href="images/favicon.png" />
 </head>
 <body>
-  <div class="container-scroller">
     
+  <div class="container-scroller">
+  <?php include('head.php'); ?>
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar default-layout col-lg-12 col-12 p-0 d-flex align-items-top flex-row pt-5 mt-3">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        <div class="me-3">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
-            <span class="icon-menu"></span>
-          </button>
-        </div>
-        <div>
-          <a class="navbar-brand brand-logo" href="index.html">
-            <img src="images/logo.svg" alt="logo">
-          </a>
-          <a class="navbar-brand brand-logo-mini" href="index.html">
-            <img src="images/logo-mini.svg" alt="logo">
-          </a>
-        </div>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-top"> 
-        <ul class="navbar-nav">
-          <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold"><?php echo $result['Ad_Name']  ?></span></h1>
-          </li>
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          
-          
-          <li class="nav-item">
-            <form class="search-form" action="#">
-              <i class="icon-search"></i>
-              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-            </form>
-          </li>
-          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image"> </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-            
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
-              <a class="dropdown-item" href="../outSession.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
-            </div>
-          </li>
-        </ul>
-       
-      </div>
-    </nav>
+    
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
@@ -100,6 +58,7 @@ if (strlen($_SESSION['id']==0))
       <!-- partial:partials/_sidebar.html -->
       <?php include('sidebar.php'); ?>
       <!-- partial -->
+      
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
@@ -107,23 +66,26 @@ if (strlen($_SESSION['id']==0))
               <!-- here the code-->
               <div class="card">
                 <div class="card-body">
-                <h4 class="card-title">Lecturer Table</h4>
+                <h4 class="card-title">Subject Table</h4>
                   <div class="table-responsive">
                   <?php
-                    $query= "SELECT * FROM lecturer";
+                    $query= "SELECT exam.*, subject.*
+                    FROM exam
+                    LEFT JOIN subject on exam.Su_ID = subject.Su_ID";
 
                       $result = mysqli_query($conn,$query);
-                      if(mysqli_num_rows($result)> 0)
-                      {?>
+                      if(mysqli_num_rows($result) > 0)
+                      {
+                        ?>
                 <table class="table">
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Name</th>
-                      <th>Birthday</th>
-                      <th>Email</th>
-                      <th>Gender</th>
-                      <th>Degree</th>
+                      <th>The program</th>
+                      <th>Type Of Exam</th>
+                      <th>Limit Time</th>
+                      <th>Date Of Created</th>
+                      
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -134,15 +96,16 @@ if (strlen($_SESSION['id']==0))
                 {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
-                      <td><?php echo $row['Le_Name']; ?></td>
-                      <td><?php echo $row['Le_Birthday']; ?></td>
-                      <td><?php echo $row['Le_Email']; ?></td>
-                      <td><?php echo $row['Le_Gender']; ?></td>
-                      <td><?php echo $row['Le_Degree']; ?></td>
+                      <td><?php echo $row['Su_Name'];  ?></td>
+                      <td><?php echo $row['Ex_Type']; ?></td>
+                      <td><?php echo $row['Ex_Duration']." "."Minutes"; ?></td>
+                      <td><?php echo $row['Ex_Date']; ?></td>
+                      
+                      
                       <td>
-                      <a href="edit-lecturer.php?id=<?php echo $row['Le_ID'];?>">
+                      <a href="edit-exam.php?id=<?php echo $row['Ex_ID'];?>">
                       <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>                                        
-                      <a href="manage-lecturer.php?id=<?php echo $row['Le_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
+                      <a href="manage-exam.php?id=<?php echo $row['Ex_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
                       <button class="btn btn-danger">Delete</button>
                       </a>
                       </td>
@@ -152,7 +115,7 @@ if (strlen($_SESSION['id']==0))
                   }
 
                   }
-                  else echo "You doesn't have any lecturer";?>
+                  else echo "You doesn't have any Subject";?>
                             </tbody>
                     </table>
                   </div>
@@ -162,6 +125,7 @@ if (strlen($_SESSION['id']==0))
             </div>
           </div>
         </div>
+      
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
        
@@ -171,6 +135,7 @@ if (strlen($_SESSION['id']==0))
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+
   <!-- container-scroller -->
 
   <!-- plugins:js -->

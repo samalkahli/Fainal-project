@@ -22,59 +22,50 @@ if (strlen($_SESSION['id']==0))
 <body>
 
   <?php
+  
   if(isset($_POST['submit']))
   {
     include_once('../../includes/conn.php');
-    $name='';
-    $semster='';
-    $lecturer='';
-    $program='';
+    $type='';
+    $time='';
+    $subject='';
     $errors=array();
     
-    if(empty($_POST['name']))
+    if(empty($_POST['type']))
     {
-        $errors[] = 'select name';
+        $errors[] = 'select type';
     }
     else
     {
-        $name = mysqli_real_escape_string($conn, trim($_POST['name']));
+        $type = mysqli_real_escape_string($conn, trim($_POST['type']));
     }
     
-    if(empty($_POST['semster']))
+    if(empty($_POST['time']))
     {
-        $errors[] = 'select semster'; 
+        $errors[] = 'select time'; 
     }
     else
     {
-        $semster = mysqli_real_escape_string($conn, trim($_POST['semster']));
+        $time = mysqli_real_escape_string($conn, trim($_POST['time']));
     }
-    if(empty($_POST['lecturer']))
+    if(empty($_POST['subject']))
     {
-        $errors[] = 'select lecturer';
-    }
-    else
-    {
-        $lecturer = mysqli_real_escape_string($conn, trim($_POST['lecturer']));
-    }
-    
-    if(empty($_POST['program']))
-    {
-        $errors[] = 'select program';
+        $errors[] = 'select subject'; 
     }
     else
     {
-        $program = mysqli_real_escape_string($conn, trim($_POST['program']));
+        $subject = mysqli_real_escape_string($conn, trim($_POST['subject']));
     }
     
     if(empty($errors))
     {
-        $query = "INSERT INTO exam (Ex_Type, semster, Le_ID, P_ID) VALUES ('$name','$semster','$lecturer','$program')";
+        $query = "INSERT INTO exam (Ex_Type, Ex_Duration, Ex_Date, Su_ID) VALUES ('$type','$time',NOW(),'$subject')";
         $r = @mysqli_query($conn ,$query);
   
         if($r)
         {
           echo "<script>alert('Profile updated successfully');</script>";
-          echo "<script type='text/javascript'> document.location = '../manage-subject.php' </script>";
+          echo "<script type='text/javascript'> document.location = '../manage-exam.php' </script>";
 
         }
         
@@ -115,7 +106,7 @@ if (strlen($_SESSION['id']==0))
               <div class="field padding-bottom--24">
                   <label>Faculty</label>
                   
-                  <select  class="form-control" name="faculty" id="fact" onchange="getData('dep')">
+                  <select  class="form-control" name="faculty" id="fact" onchange="getData('dep')" required>
                     <option value="0">Select faculty:</option>
                     
                     <?php 
@@ -129,21 +120,22 @@ if (strlen($_SESSION['id']==0))
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="department">Department</label>
-                  <select  class="form-control" name="department" id="department" onchange="getData('pro')">
+                  <select  class="form-control" name="department" id="department" onchange="getData('pro')" required>
                    
 
                   </select>
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="program">Program</label>
-                  <select  class="form-control" name="program" id="program" onchange="getData('sub')" >
+                  <select  class="form-control" name="program" id="program" onchange="getData('sub')" required>
                    
 
                   </select>
                 </div>
                 <div class="field padding-bottom--24">
                 <label>Semster</label>
-                <select  class="form-control" name="semster" id="semster" onchange="getData('sem')" >
+                <select  class="form-control" name="semster" id="semster" onchange="getData('sem')" required >
+                <option value="0">select semster :</option>
                 <option value="1">one</option>
                 <option value="2">two</option>
                 <option value="3">three</option>
@@ -158,30 +150,31 @@ if (strlen($_SESSION['id']==0))
                   <label for="subject">Subject</label>
                   <select  class="form-control" name="subject" id="subject" >
                    
-
                   </select>
                 </div>
-             
-                
-            
-            <div class="field padding-bottom--24">
-            <label>Lecturer</label>
-            <select class="form-control" name="lecturer">
-            <option value="0">Select Lecturer</option>
-              <?php 
-              include_once('../../includes/conn.php');
-                $selCourse = mysqli_query($conn,"SELECT * FROM lecturer ORDER BY Le_ID asc");
-                while ($selCourseRow = mysqli_fetch_assoc($selCourse)){ ?>
-                  <option value="<?php echo $selCourseRow['Le_ID']; ?>"><?php echo $selCourseRow['Le_Name']; ?></option>
-                <?php }
-               ?>
+                <div class="field padding-bottom--24 ">
+            <label>Exam Type</label>
+            <select class="form-control" name="type" required>
+
+              <option value="">Select Type</option>
+              <option value="Sem Fainal">Sem Fainal</option>
+              <option value="Test">Test</option>
+              <option value="Fainal">Fainal</option> 
+
             </select>
-                </div>
-                <div class="field padding-bottom--24">
-                  <label for="name">Name The Subject</label>
-                  <input type="text" name="name">
-                </div>
-               
+          </div>
+                <div class="field padding-bottom--24 form-group">
+            <label>Exam Time Limit</label>
+            <select class="form-control" name="time" required>
+              <option value="0">Select time</option>
+              <option value="10">10 Minutes</option> 
+              <option value="20">20 Minutes</option> 
+              <option value="30">30 Minutes</option> 
+              <option value="40">40 Minutes</option> 
+              <option value="50">50 Minutes</option> 
+              <option value="60">60 Minutes</option> 
+            </select>
+          </div>
                 <div class="field padding-bottom--19">
                 <div class="formbg-inner">
 
