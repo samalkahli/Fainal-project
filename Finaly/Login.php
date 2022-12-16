@@ -14,21 +14,36 @@
     include_once('includes/conn.php');
     $password=$_POST['password'];
     $useremail = $_POST['email'];
-    $ret= mysqli_query($conn,"SELECT * FROM admin WHERE Ad_Email='$useremail' and Ad_Pass='$password'");
+    $ret= mysqli_query($conn,"SELECT admin.*, lecturer.* FROM admin, lecturer ");
     $num=mysqli_fetch_array($ret);
-    if($num>0)
-    {
+    if ($useremail==$num['Ad_Email'] && $password==$num['Ad_Pass'] )
+     {
+        if($num>0)
+        {
 
-      $_SESSION['id']=$num['Ad_ID'];
-      $_SESSION['name']=$num['Ad_Name'];
-      header('location:adminPanel/index.php');
+          $_SESSION['id']=$num['Ad_ID'];
+          $_SESSION['name']=$num['Ad_Name'];
+          header('location:adminPanel/index.php');
 
-    }
-    else
-    {
-      $res = array("res" => "invalid");
-    } 
-    
+        }
+        
+      }
+      else if($useremail==$num['Le_Email'] && $password==$num['Le_Pass'] )
+      {
+        if($num>0)
+        {
+
+          $_SESSION['id']=$num['Le_ID'];
+          $_SESSION['name']=$num['Le_Name'];
+          header('location:lecturer/index.php');
+
+        }
+
+      }
+      else
+        echo "<script>alart('pls enter');</script>";
+          
+        
   }
   else
    {
