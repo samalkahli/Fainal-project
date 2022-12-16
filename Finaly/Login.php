@@ -8,41 +8,41 @@
 
 <body>
   <?php
-  session_start();
+  
   if(isset($_POST['submit']))
   {
+    session_start();
     include_once('includes/conn.php');
     $password=$_POST['password'];
     $useremail = $_POST['email'];
-    $ret= mysqli_query($conn,"SELECT admin.*, lecturer.* FROM admin, lecturer ");
-    $num=mysqli_fetch_array($ret);
-    if ($useremail==$num['Ad_Email'] && $password==$num['Ad_Pass'] )
-     {
-        if($num>0)
+
+    $retLe= mysqli_query($conn,"SELECT * FROM lecturer where Le_Email='$useremail' AND Le_Pass='$password' ");
+    $numLe= mysqli_fetch_array($retLe);
+
+    $retAd= mysqli_query($conn,"SELECT * FROM admin where Ad_Email='$useremail' AND Ad_Pass='$password' ");
+    $numAd=mysqli_fetch_array($retAd);
+    #echo var_dump($numAd);
+    #echo var_dump($numLe);
+        if($numAd>0)
         {
 
-          $_SESSION['id']=$num['Ad_ID'];
-          $_SESSION['name']=$num['Ad_Name'];
+          $_SESSION['id']=$numAd['Ad_ID'];
+          $_SESSION['name']=$numAd['Ad_Name'];
           header('location:adminPanel/index.php');
-
         }
-        
-      }
-      else if($useremail==$num['Le_Email'] && $password==$num['Le_Pass'] )
-      {
-        if($num>0)
+        else if($numLe>0)
         {
 
-          $_SESSION['id']=$num['Le_ID'];
-          $_SESSION['name']=$num['Le_Name'];
+          $_SESSION['id']=$numLe['Le_ID'];
+          $_SESSION['name']=$numLe['Le_Name'];
           header('location:lecturer/index.php');
 
         }
 
-      }
+      
       else
-        echo "<script>alart('pls enter');</script>";
-          
+        echo "<script>alert('pls enter');</script>";
+        echo "<script type='text/javascript'> document.location = 'Login.php' </script>";
         
   }
   else
