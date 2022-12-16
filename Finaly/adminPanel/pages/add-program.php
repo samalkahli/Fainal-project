@@ -14,14 +14,9 @@ if (strlen($_SESSION['id']==0))
   <meta charset="utf-8">
   <title>Sign up</title>
   <link rel="stylesheet" type="text/css" href="../../css/styleLogin.css">
-  <script language="javascript" type="text/javascript">
-    </script>
+  <script language="javascript" type="text/javascript"></script>
   <script src="../js/jquery.js"></script>
-
-    
   <script><?php include_once("../js/ajax.js")?></script>
-
-    
 </head>
 
 <body>

@@ -10,6 +10,7 @@ if (strlen($_SESSION['id']==0))
   }
   else{ 
     $leid=intval($_GET['id']);
+    $D_ID=intval($_GET['d_id']);
     if(isset($_POST['submit']))
     {
         
@@ -39,9 +40,6 @@ if (strlen($_SESSION['id']==0))
 <html lang="en">
 
 <head>
-<html lang="en">
-
-<head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -62,6 +60,8 @@ if (strlen($_SESSION['id']==0))
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+  <script><?php include_once("js/ajax.js")?></script>
+
 </head>
 <body>
     
@@ -92,7 +92,8 @@ if (strlen($_SESSION['id']==0))
                   <?php
                     $query= "SELECT exam.*, subject.*
                     FROM exam
-                    LEFT JOIN subject on exam.Su_ID = subject.Su_ID where Ex_ID='$leid'";
+                    LEFT JOIN subject on exam.Su_ID = subject.Su_ID  
+                    where Ex_ID='$leid'";
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result) > 0)
@@ -103,6 +104,8 @@ if (strlen($_SESSION['id']==0))
                     <tr>
                       <th>No.</th>
                       <th>The program</th>
+                      <th>The Semster</th>
+                      <th>The Subject</th>
                       <th>Type Of Exam</th>
                       <th>Limit Time</th>
                       <th>Date Of Created</th>
@@ -116,16 +119,44 @@ if (strlen($_SESSION['id']==0))
                 {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
-                      <td><input class="form-control" name=program value="<?php echo $row['Su_Name'];?>" ></td>
                       <td>
+                        <select class="form-control" name="program" id="program" onchange="getData('sub')">
+                        <?php
+                        $getP=mysqli_query($conn,"SELECT * FROM program where D_ID='$D_ID' ");
+                         while ($rows = mysqli_fetch_assoc($getP))
+                        {?>
+                          <option value="<?php echo $rows['P_ID'];?>"><?php echo $rows['P_Name'];?></option>
+                        <?php }?>
+                        </select>
+                        </td>
+                        <td>
+                        <select class="form-control" name="semster" id="semster" onchange="getData('sem')">
+                          <option value="<?php echo $row['semster'];?>"><?php echo $row['semster'];?></option>
+                          <option value="1">one</option>
+                          <option value="2">two</option>
+                          <option value="3">three</option>
+                          <option value="4">four</option>
+                          <option value="5">five</option>
+                          <option value="6">six</option>
+                          <option value="7">seven</option>
+                        </select>
+                        </td>
+                        <td>
+                        <select class="form-control" name="subject" id="subject" >
+                          <option value="<?php echo $row['Su_Name'];?>"><?php echo $row['Su_Name'];?></option>
+                        </select>
+                        </td>
+                        
+                      
+                          <td>
                         <select class="form-control" name="type">
-                        <option value="<?php echo $row['Ex_Type'];?>"><?php echo $row['Ex_Type'];?>
-                        <option value="Sem Fainal">Sem Fainal</option>
-                        <option value="Test">Test</option>
-                        <option value="Fainal">Fainal</option> 
+                          <option value="<?php echo $row['Ex_Type'];?>"><?php echo $row['Ex_Type'];?>
+                          <option value="Sem Fainal">Sem Fainal</option>
+                          <option value="Test">Test</option>
+                          <option value="Fainal">Fainal</option> 
 
-            </select>
-                    </td>
+                        </select>
+                      </td>
                       <td>
                       <select class="form-control" name="time" required>
               <option value="<?php echo $row['Ex_Duration']; ?>"><?php echo $row['Ex_Duration']." Minutes"; ?></option>

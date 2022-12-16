@@ -11,7 +11,7 @@ if (strlen($_SESSION['id']==0))
   else{ 
         if(isset($_GET['del']))
         {
-        mysqli_query($conn,"delete from subject where Su_ID =".$_GET['id']);
+        mysqli_query($conn,"delete from exam where Ex_ID =".$_GET['id']);
         echo '<script>alert("Lecturer Record Deleted Successfully !!")</script>';
         echo '<script>window.location.href=manage-lecturer.php</script>';
               }?>
@@ -69,9 +69,11 @@ if (strlen($_SESSION['id']==0))
                 <h4 class="card-title">Subject Table</h4>
                   <div class="table-responsive">
                   <?php
-                    $query= "SELECT exam.*, subject.*
+                    $query= "SELECT exam.*, subject.*, program.*, department.*
                     FROM exam
-                    LEFT JOIN subject on exam.Su_ID = subject.Su_ID";
+                    LEFT JOIN subject on exam.Su_ID = subject.Su_ID
+                    LEFT JOIN program on subject.P_ID = program.P_ID
+                    LEFT JOIN department on program.D_ID = department.D_ID";
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result) > 0)
@@ -80,11 +82,15 @@ if (strlen($_SESSION['id']==0))
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>No.</th>
-                      <th>The program</th>
+                    <th>No.</th>
+                      <th>The Department</th>
+                      <th>The Program</th>
+                      <th>The Semster</th>
+                      <th>The Subject</th>
                       <th>Type Of Exam</th>
                       <th>Limit Time</th>
                       <th>Date Of Created</th>
+                      
                       
                       <th>Action</th>
                     </tr>
@@ -95,15 +101,18 @@ if (strlen($_SESSION['id']==0))
                    while($row = mysqli_fetch_assoc($result))
                 {?>
                     <tr>
-                    <td><?php echo $i; $i++; ?></td>
-                      <td><?php echo $row['Su_Name'];  ?></td>
-                      <td><?php echo $row['Ex_Type']; ?></td>
-                      <td><?php echo $row['Ex_Duration']." "."Minutes"; ?></td>
+                      <td><?php echo $i; $i++; ?></td>
+                      <td><?php echo $row['D_Name'];?></td>
+                      <td><?php echo $row['P_Name'];?></td>
+                      <td><?php echo $row['semster'];?></td>
+                      <td><?php echo $row['Su_Name'];?></td>
+                      <td><?php echo $row['Ex_Type'];?></td>
+                      <td><?php echo $row['Ex_Duration']." Minutes"; ?></td>
                       <td><?php echo $row['Ex_Date']; ?></td>
                       
                       
                       <td>
-                      <a href="edit-exam.php?id=<?php echo $row['Ex_ID'];?>">
+                      <a href="edit-exam.php?d_id=<?php echo $row['D_ID']; ?>&id=<?php echo $row['Ex_ID'];?>">
                       <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>                                        
                       <a href="manage-exam.php?id=<?php echo $row['Ex_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
                       <button class="btn btn-danger">Delete</button>

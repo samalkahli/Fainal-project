@@ -43,7 +43,7 @@ function getData(data)
   {
     //console.log( $('fact') );
     var program = document.getElementById('program').value;
-    //alert(program);
+    alert(program);
     $("#subject").empty();
     if(program>0)
     {
@@ -62,7 +62,7 @@ function getData(data)
     //console.log( $('fact') );
     var semster = document.getElementById('semster').value;
     var program = document.getElementById('program').value;
-    //alert(semster);
+    alert(semster+program);
     $("#subject").empty();
     if(semster>0)
     {
