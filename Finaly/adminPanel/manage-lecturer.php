@@ -88,7 +88,6 @@ if (strlen($_SESSION['id']==0))
                       <th>Name</th>
                       <th>Birthday</th>
                       <th>Email</th>
-                      <!-- <th>Password</th> -->
                       <th>Gender</th>
                       <th>Degree</th>
                       <th>Action</th>
@@ -104,8 +103,6 @@ if (strlen($_SESSION['id']==0))
                       <td><?php echo $row['Le_Name']; ?></td>
                       <td><?php echo $row['Le_Birthday']; ?></td>
                       <td><?php echo $row['Le_Email']; ?></td>
-                      <!-- <td><input id="pass" type="text" value="<?php #echo $row['Le_Pass'] ?>"readonly>
-                      <input type="checkbox" onclick="myFunction()"></td> -->
                       <td><?php echo $row['Le_Gender']; ?></td>
                       <td><?php echo $row['Le_Degree']; ?></td>
                       
@@ -138,19 +135,7 @@ if (strlen($_SESSION['id']==0))
       </div>
     </div>
   </div>
-  <script>
-function myFunction()
-{
-  var x = document.getElementById('pass');
-  alert(x);
-  if (x.type == "password")
-  {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-</script>
+
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->

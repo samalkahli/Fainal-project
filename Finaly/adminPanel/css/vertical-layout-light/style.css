@@ -19638,8 +19638,8 @@ textarea:hover,
 textarea:visited {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
-  box-shadow: none;
-  border: unset;
+ 
+  
 }
 
 .btn.active.focus, .ajax-upload-dragdrop .active.focus.ajax-file-upload, .swal2-modal .swal2-buttonswrapper .active.focus.swal2-styled,

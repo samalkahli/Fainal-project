@@ -48,7 +48,7 @@ if (strlen($_SESSION['id']==0))
         {
             
           
-            echo "<script>alert('Profile updated successfully');</script>";
+            echo "<script>alert('DONE');</script>";
            echo "<script type='text/javascript'> document.location = 'add-department.php' </script>";
 
             

@@ -8,8 +8,28 @@ if (strlen($_SESSION['id']==0))
   {
   header('location:../outSession.php');
   }
-  else ?>
+  else{ 
+
+    $Did = intval($_GET['id']);
+    
+    if (isset($_POST['submit']))
+    {
+        $name = $_POST['name'];
+        $query ="UPDATE department set
+        D_Name = '$name'
+        where D_ID ='$Did'";
+        $res = mysqli_query($conn,$query); 
+        if ($res)
+        {
+            echo "<script>alert('Profile updated successfully');</script>";
+            echo "<script type='text/javascript'> document.location = 'index.php'; </script>";   
+        } 
+    }
+        ?>
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
 <html lang="en">
 
 <head>
@@ -38,7 +58,8 @@ if (strlen($_SESSION['id']==0))
   <div class="container-scroller">
     
     <!-- partial:partials/_navbar.html -->
-    <?php include('head.php');?>
+    <?php include('head.php'); ?>
+
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
@@ -55,45 +76,44 @@ if (strlen($_SESSION['id']==0))
               <!-- here the code-->
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Basic Table</h4>
+                <h4 class="card-title">Department Table</h4>
                   <div class="table-responsive">
+                    <form method="post">
                   <?php
-                      $query= "SELECT `faculty`.*, `department`.*, `program`.*
-                      FROM `faculty` 
-                        LEFT JOIN `department`
-                         ON `department`.`F_ID` = `faculty`.`F_ID` 
-                        LEFT JOIN `program`
-                         ON `program`.`D_ID` = `department`.`D_ID`";
-                       $result = mysqli_query($conn,$query);
+                    $query= "SELECT * FROM department where D_ID = '$Did' ";
+
+                      $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result)> 0)
                       {?>
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Faculty <a class="mdi mdi-border-color" href="manage-faculty.php"></a></th>
-                      <th>Department <a class="mdi mdi-border-color" href="manage-department.php"></a></th>
-                      <th>Program <a class="mdi mdi-border-color" href="manage-program.php"></a></th>
-                      
+                      <th>No.</th>
+                      <th>Name</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <?php while($row = mysqli_fetch_assoc($result))
+                  <?php
+                  $i=1;
+                   while($row = mysqli_fetch_assoc($result))
                 {?>
                     <tr>
-                      <td><?php echo @$row['F_Name']; ?></td>
-                      <td><?php echo @$row['D_Name']; ?></td>
-                      <td><?php echo @$row['P_Name']; ?></td>
+                    <td><?php echo $i; $i++; ?></td>
+                      <td><input type="text" name="name" value="<?php echo $row['D_Name']; ?>"></td>
                     </tr>
                     <?php
                   }
 
                   }
-                  else echo "you don't have any data";?>
+                  else echo "You haven't any department";?>
                             </tbody>
                     </table>
+                    <button name="submit" type="submit" class="btn btn-primary"  onClick="return confirm('Are you sure you want to update')"><i class="fa fa-edit "></i> UPDATE</button> 
+
                   </div>
                 </div>
               </div>
+                </form>
             </div>
             </div>
           </div>
@@ -129,7 +149,7 @@ if (strlen($_SESSION['id']==0))
   <script src="js/jquery.cookie.js" type="text/javascript"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/Chart.roundedBarCharts.js"></script>
-
+                <?php }?>
   <!-- End custom js for this page-->
 </body>
 </html>

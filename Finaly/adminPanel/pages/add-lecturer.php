@@ -168,12 +168,15 @@ if (strlen($_SESSION['id']==0))
                 <div class=" field-checkbox padding-bottom--24">
                 <label>Degree</label>
               
-              <input class="redio" type="radio" name="degree" value="Prof.">Prof.</input>
-              <input class="redio" type="radio" name="degree" value="Doctor">Doctor</input>
-              <input class="redio" type="radio" name="degree" value="Master">Master</input><br style="margin: 20px;">
-              <input class="redio" type="radio" name="degree" value="" >Other </input>
-              
+                <input class="redio" type="radio" name="degree" value="Prof.">Prof.</input>
+                <input class="redio" type="radio" name="degree" value="Doctor">Doctor</input>
+                <input class="redio" type="radio" name="degree" value="Master">Master</input><br style="margin: 20px;">
+                <input class="redio" type="radio" name="degree" value="" id="oo" onclick="get()">Other </input>
                 </div>
+                <div id="other" class="field padding-bottom--24" hidden >
+                  <input type="text" > 
+                </div>
+              
                 <div class="field padding-bottom--24">
                   <div class="grid--50-50">
                     <label for="password">Password</label>
@@ -200,24 +203,42 @@ if (strlen($_SESSION['id']==0))
     </form>
   <?php } }?>
   <script>
-function myFunction() {
+function myFunction()
+{
   var x = document.getElementById("myInput");
   if (x.type === "password") {
     x.type = "text";
   } else {
     x.type = "password";
   }
-}
-function other()
+} 
+function get()
 {
-  var idOther = document.getElementById("idOther");
-  var other = document.getElementById("other");
-  if(idOther){
-    hidden();
-    
+var y = document.getElementById('other');
+
+ if (y.style.display === "block") {
+    y.style.display = "none";
+  } else {
+    y.style.display = "block";
   }
-  
 }
+ 
+// x.ontouchend = function()
+//  {
+//   document.getElementById("other").style.display = "block";
+//   //alert(x);
+// }
+// y.onfocus = function()
+//  {
+//   document.getElementById("other").style.display = "block";
+//   //alert(y);
+// }
+
+// y.onblur = function()
+//  {
+//   document.getElementById("other").style.display = "none";
+//   //alert(y);
+// }
 
 </script>
 </body>
