@@ -69,11 +69,12 @@ if (strlen($_SESSION['id']==0))
                 <h4 class="card-title">Subject Table</h4>
                   <div class="table-responsive">
                   <?php
-                    $query= "SELECT exam.*, subject.*, program.*, department.*
+                    $query= "SELECT exam.*, subject.*, program.*, department.*, lecturer.*
                     FROM exam
                     LEFT JOIN subject on exam.Su_ID = subject.Su_ID
                     LEFT JOIN program on subject.P_ID = program.P_ID
-                    LEFT JOIN department on program.D_ID = department.D_ID";
+                    LEFT JOIN department on program.D_ID = department.D_ID
+                    LEFT JOIN lecturer on subject.Le_ID = lecturer.Le_ID ";
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result) > 0)
@@ -86,6 +87,7 @@ if (strlen($_SESSION['id']==0))
                       <th>The Department</th>
                       <th>The Program</th>
                       <th>The Semster</th>
+                      <th>The Lecturer</th>
                       <th>The Subject</th>
                       <th>Type Of Exam</th>
                       <th>Limit Time</th>
@@ -105,6 +107,7 @@ if (strlen($_SESSION['id']==0))
                       <td><?php echo $row['D_Name'];?></td>
                       <td><?php echo $row['P_Name'];?></td>
                       <td><?php echo $row['semster'];?></td>
+                      <td><?php echo $row['Le_Name'];?></td>
                       <td><?php echo $row['Su_Name'];?></td>
                       <td><?php echo $row['Ex_Type'];?></td>
                       <td><?php echo $row['Ex_Duration']." Minutes"; ?></td>

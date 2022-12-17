@@ -153,7 +153,7 @@ if (strlen($_SESSION['id']==0))
                   <input type="text" name="name" required>
                 </div>
                 <div class="field padding-bottom--24">
-                  <label for="birthday">Birth Day</label>
+                  <label for="birthday">BirthDay</label>
                   <input type="date" name="birthday" id="bdate" class="form-control" placeholder="Input Birhdate" autocomplete="off" required>
                 </div>
                 <div class="field padding-bottom--24">

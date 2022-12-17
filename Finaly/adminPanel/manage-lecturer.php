@@ -19,7 +19,7 @@ if (strlen($_SESSION['id']==0))
       {
         $password="Lecturer.123";
         $newpass = $password;
-              mysqli_query($conn,"update lecturer set Le_Pass='$newpass' where Le_ID = '".$_GET['id']."'");
+              mysqli_query($conn,"UPDATE lecturer set Le_Pass='$newpass' where Le_ID = '".$_GET['id']."'");
               echo '<script>alert("Password Reset. New Password is Lecturer.123")</script>';
         echo '<script>window.location.href=manage-students.php</script>';
       } 
@@ -56,50 +56,7 @@ if (strlen($_SESSION['id']==0))
   <div class="container-scroller">
     
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar default-layout col-lg-12 col-12 p-0 d-flex align-items-top flex-row pt-5 mt-3">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        <div class="me-3">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
-            <span class="icon-menu"></span>
-          </button>
-        </div>
-        <div>
-          <a class="navbar-brand brand-logo" href="index.html">
-            <img src="images/logo.svg" alt="logo">
-          </a>
-          <a class="navbar-brand brand-logo-mini" href="index.html">
-            <img src="images/logo-mini.svg" alt="logo">
-          </a>
-        </div>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-top"> 
-        <ul class="navbar-nav">
-          <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold"><?php echo $result['Ad_Name']  ?></span></h1>
-          </li>
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          
-          
-          <li class="nav-item">
-            <form class="search-form" action="#">
-              <i class="icon-search"></i>
-              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-            </form>
-          </li>
-          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image"> </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-            
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
-              <a class="dropdown-item" href="../outSession.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
-            </div>
-          </li>
-        </ul>
-       
-      </div>
-    </nav>
+    <?php include('head.php'); ?>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
@@ -131,6 +88,7 @@ if (strlen($_SESSION['id']==0))
                       <th>Name</th>
                       <th>Birthday</th>
                       <th>Email</th>
+                      <!-- <th>Password</th> -->
                       <th>Gender</th>
                       <th>Degree</th>
                       <th>Action</th>
@@ -139,24 +97,27 @@ if (strlen($_SESSION['id']==0))
                   <tbody>
                   <?php
                   $i=1;
-                   while($row = mysqli_fetch_assoc($result))
-                {?>
+                  while($row = mysqli_fetch_assoc($result))
+                  {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
                       <td><?php echo $row['Le_Name']; ?></td>
                       <td><?php echo $row['Le_Birthday']; ?></td>
                       <td><?php echo $row['Le_Email']; ?></td>
+                      <!-- <td><input id="pass" type="text" value="<?php #echo $row['Le_Pass'] ?>"readonly>
+                      <input type="checkbox" onclick="myFunction()"></td> -->
                       <td><?php echo $row['Le_Gender']; ?></td>
                       <td><?php echo $row['Le_Degree']; ?></td>
+                      
                       <td>
                       <a href="edit-lecturer.php?id=<?php echo $row['Le_ID'];?>">
-                      <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>                                        
+                        <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>                                        
                       <a href="manage-lecturer.php?id=<?php echo $row['Le_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
-                      <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-danger">Delete</button>
                       </a>
                       <a href="manage-lecturer.php?id=<?php echo $row['Le_ID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
-                                <button type="submit" name="submit" id="submit" class="btn" style="background-color: wheat;">Reset Password</button>
-                                </a>
+                        <button type="submit" name="submit" id="submit" class="btn btn-secondary" >Reset Password</button>
+                      </a>
                       </td>
 
                     </tr>
@@ -174,17 +135,22 @@ if (strlen($_SESSION['id']==0))
             </div>
           </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-       
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
-
+  <script>
+function myFunction()
+{
+  var x = document.getElementById('pass');
+  alert(x);
+  if (x.type == "password")
+  {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->

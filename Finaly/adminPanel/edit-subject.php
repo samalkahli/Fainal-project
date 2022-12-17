@@ -10,6 +10,7 @@ if (strlen($_SESSION['id']==0))
   }
   else{
     $leid=intval($_GET['id']);
+    $Did=intval($_GET['Did']);
     if(isset($_POST['submit']))
     {
         
@@ -94,10 +95,11 @@ if (strlen($_SESSION['id']==0))
                   <form method="post">
       
                   <?php
-                    $query= "SELECT `subject`.*, `lecturer`.`Le_Name`, `program`.`P_Name`
-                    FROM `subject` 
-                      INNER JOIN `lecturer` ON `subject`.`Le_ID` = `lecturer`.`Le_ID` 
-                      LEFT JOIN `program` ON `subject`.`P_ID` = `program`.`P_ID`";
+                    $query= "SELECT subject.*, program.P_Name, lecturer.Le_Name
+                    FROM subject 
+                      LEFT JOIN program ON subject.P_ID = program.P_ID 
+                      LEFT JOIN lecturer on subject.Le_ID = lecturer.Le_ID 
+                      where Su_ID = '$leid'";
 
                       $result = mysqli_query($conn,$query);
                       ?>
@@ -105,10 +107,11 @@ if (strlen($_SESSION['id']==0))
                   <thead>
                     <tr>
                       <th>No.</th>
+                      <th>The program</th>
                       <th>Name</th>
                       <th>Semster</th>
                       <th>The lecturer</th>
-                      <th>The program</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -118,6 +121,16 @@ if (strlen($_SESSION['id']==0))
                 {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
+                    <td><select class="form-control" name="program">
+                        <option value="<?php echo $row['P_ID'];?>"><?php echo $row['P_Name'];?></option>
+                        <?php $queryP = " SELECT * FROM program where D_ID='$Did'  ";
+                                $resP = mysqli_query($conn,$queryP);
+                                while ($rowP = mysqli_fetch_assoc($resP)) {
+                                ?>
+                        <option value="<?php echo $rowP['P_ID'];?>"><?php echo $rowP['P_Name'];?></option>
+                                <?php } ?>
+                        </select></td>
+
                       <td><input name="name" class="form-control" value="<?php echo $row['Su_Name']; ?>" required /></td>
                       <td>
                         <select class="form-control" name="semster">
@@ -131,13 +144,19 @@ if (strlen($_SESSION['id']==0))
                           <option value="7">seven</option>
                         </select>
                       </td>
-                      <td><select class="form-control" name="lecturer">
+                      <td>
+                        <select class="form-control" name="lecturer">
                         <option value="<?php echo $row['Le_ID'];?>"><?php echo $row['Le_Name'];?></option>
-                        </td>
+
+                          <?php $queryLe = " SELECT * FROM lecturer ";
+                                $resLe = mysqli_query($conn,$queryLe);
+                                while ($rowLe = mysqli_fetch_assoc($resLe)) {
+                                ?>
+                        <option value="<?php echo $rowLe['Le_ID'];?>"><?php echo $rowLe['Le_Name'];?></option>
+                                <?php } ?>
+                      </td>
                     
-                    <td><select class="form-control" name="program">
-                        <option value="<?php echo $row['P_ID'];?>"><?php echo $row['P_Name'];?></option>
-                        </select></td>
+                    
                     </tr>
                     <?php
                   

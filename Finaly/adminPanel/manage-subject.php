@@ -69,10 +69,11 @@ if (strlen($_SESSION['id']==0))
                 <h4 class="card-title">Subject Table</h4>
                   <div class="table-responsive">
                   <?php
-                    $query= "SELECT `subject`.*, `lecturer`.`Le_Name`, `program`.`P_Name`
-                    FROM `subject` 
-                      LEFT JOIN `lecturer` ON `subject`.`Le_ID` = `lecturer`.`Le_ID` 
-                      LEFT JOIN `program` ON `subject`.`P_ID` = `program`.`P_ID`";
+                    $query= "SELECT subject.*, lecturer.Le_Name, program.P_Name, department.*
+                              FROM subject
+                              LEFT JOIN lecturer ON subject.Le_ID = lecturer.Le_ID 
+                              LEFT JOIN program ON subject.P_ID = program.P_ID
+                              LEFT JOIN department ON program.D_ID = department.D_ID";
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result) > 0)
@@ -82,10 +83,11 @@ if (strlen($_SESSION['id']==0))
                   <thead>
                     <tr>
                       <th>No.</th>
+                      <th>The Department</th>
+                      <th>The Program</th>
                       <th>Name</th>
                       <th>Semster</th>
                       <th>The lecturer</th>
-                      <th>The program</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -95,14 +97,14 @@ if (strlen($_SESSION['id']==0))
                    while($row = mysqli_fetch_assoc($result))
                 {?>
                     <tr>
-                    <td><?php echo $i; $i++; ?></td>
+                      <td><?php echo $i; $i++; ?></td>
+                      <td><?php echo $row['D_Name']; ?></td>
+                      <td><?php echo $row['P_Name']; ?></td>
                       <td><?php echo $row['Su_Name']; ?></td>
                       <td><?php echo $row['semster']; ?></td>
-                      <td><?php echo $row['Le_Name']; ?></td>
-                      <td><?php echo $row['P_Name']; ?></td>
-                      
+                      <td><?php echo $row['Le_Name']; ?></td>  
                       <td>
-                      <a href="edit-subject.php?id=<?php echo $row['Su_ID'];?>">
+                      <a href="edit-subject.php?id=<?php echo $row['Su_ID'];?>&Did=<?php echo $row['D_ID'];?>">
                       <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>                                        
                       <a href="manage-subject.php?id=<?php echo $row['Su_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
                       <button class="btn btn-danger">Delete</button>

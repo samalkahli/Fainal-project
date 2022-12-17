@@ -15,13 +15,16 @@ if (strlen($_SESSION['id']==0))
     {
         
 
-        $type=$_POST['type'];
-        $time=$_POST['time'];
+        $type= $_POST['type'];
+        $time= $_POST['time'];
+        $subject=$_POST['subject'];
+        //$semster= $_POST['semster'];
         
         $queryy="UPDATE exam set
                         Ex_type ='$type',
                         Ex_Duration ='$time',
-                        Ex_Date =NOW()
+                        Ex_Date =NOW(),
+                        Su_ID ='$subject'
                         where
                         Ex_ID ='$leid'";
 
@@ -31,7 +34,7 @@ if (strlen($_SESSION['id']==0))
     {
         echo "<script>alert('Profile updated successfully');</script>";
            echo "<script type='text/javascript'> document.location = 'manage-exam.php'; </script>";
-            
+        //echo var_dump($res);
     }
 
     
@@ -141,9 +144,10 @@ if (strlen($_SESSION['id']==0))
                           <option value="7">seven</option>
                         </select>
                         </td>
+                        
                         <td>
-                        <select class="form-control" name="subject" id="subject" >
-                          <option value="<?php echo $row['Su_Name'];?>"><?php echo $row['Su_Name'];?></option>
+                        <select  class="form-control" name="subject" id="subject" >
+                          <option value="<?php echo $row['Su_ID'];?>"><?php echo $row['Su_Name'];?></option>
                         </select>
                         </td>
                         

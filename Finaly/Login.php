@@ -21,6 +21,7 @@
 
     $retAd= mysqli_query($conn,"SELECT * FROM admin where Ad_Email='$useremail' AND Ad_Pass='$password' ");
     $numAd=mysqli_fetch_array($retAd);
+    
     #echo var_dump($numAd);
     #echo var_dump($numLe);
         if($numAd>0)

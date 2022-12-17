@@ -43,10 +43,11 @@ function getData(data)
   {
     //console.log( $('fact') );
     var program = document.getElementById('program').value;
-    alert(program);
+    //alert(program);
     $("#subject").empty();
     if(program>0)
     {
+      
       $.get("getSubject.php?data=sub&program="+program, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 
@@ -62,10 +63,11 @@ function getData(data)
     //console.log( $('fact') );
     var semster = document.getElementById('semster').value;
     var program = document.getElementById('program').value;
-    alert(semster+program);
+    //alert(semster+program);
     $("#subject").empty();
     if(semster>0)
     {
+      
       $.get("getSubject.php?data=sem&semster="+semster+"&program="+program, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 

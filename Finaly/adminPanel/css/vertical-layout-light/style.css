@@ -19639,6 +19639,7 @@ textarea:visited {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+  border: unset;
 }
 
 .btn.active.focus, .ajax-upload-dragdrop .active.focus.ajax-file-upload, .swal2-modal .swal2-buttonswrapper .active.focus.swal2-styled,
@@ -21493,7 +21494,7 @@ code {
 }
 
 .btn-secondary {
-  background: #F1F1F1;
+  background: wheat;
   color: #ffffff;
 }
 
@@ -21502,7 +21503,7 @@ code {
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-  background: #d8d8d8;
+  background: wheat;
   color: #ffffff;
 }
 
@@ -21512,7 +21513,7 @@ code {
 }
 
 .btn-secondary.btn-social-icon-text i {
-  background: #F1F1F1;
+  background: wheat;
   padding: .75rem;
   display: inline-block;
   margin-right: 1.5rem;
@@ -21524,7 +21525,7 @@ code {
 }
 
 .btn-outline-secondary:hover, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-cancel:hover {
-  background: #F1F1F1;
+  background: wheat;
   color: #ffffff;
 }
 
