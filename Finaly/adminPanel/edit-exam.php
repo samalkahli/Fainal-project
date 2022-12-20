@@ -57,6 +57,7 @@ if (strlen($_SESSION['id']==0))
   <link rel="stylesheet" href="vendors/typicons/typicons.css">
   <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <script src="js/ajax.js"> </script>
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -82,9 +83,12 @@ if (strlen($_SESSION['id']==0))
     padding: 8px 16px;
     width: 100%;
     min-height: 44px;
-    border: unset;
     border-radius: 4px;
+    border: 1px solid #dee2e6;
+    font-weight: 400;
+    height: 2rem;
 }
+
 .btnn
 {
   width: 100%;
@@ -237,7 +241,9 @@ label {
                         </div>
                         <div class="collapse" id="div" style="margin: 20px;">
                         <div class="field padding-bottom--24">
-                            <label>Date Of Created</label>
+                          <label for="name">Chapter's</label>
+                          <input name="form-control" type="text" value="1" name="number" max="8" min="1">
+                        
                         </div>
                       </div>
               </div>
