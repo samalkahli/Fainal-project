@@ -11859,9 +11859,9 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
 }
 
 .btn-light:hover {
-  color: #000;
-  background-color: #fcfcfc;
-  border-color: #fbfbfb;
+  color: rgb(0, 0, 0);
+  background-color: #696969;
+  border-color: #0a0909;
 }
 
 .btn-check:focus + .btn-light, .btn-light:focus {
@@ -12192,7 +12192,7 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
 
 .btn-link {
   font-weight: 400;
-  color: #0d6efd;
+  color: #001f4d;
   text-decoration: underline;
 }
 
@@ -19637,9 +19637,7 @@ textarea:focus,
 textarea:hover,
 textarea:visited {
   -webkit-box-shadow: none;
-  -moz-box-shadow: none;
- 
-  
+  -moz-box-shadow: none; 
 }
 
 .btn.active.focus, .ajax-upload-dragdrop .active.focus.ajax-file-upload, .swal2-modal .swal2-buttonswrapper .active.focus.swal2-styled,
@@ -23660,7 +23658,7 @@ select.tt-hint {
   padding: .4375rem .75rem;
 border: 0;
 outline: 1px solid #dee2e6;
-width: 100px;
+width: 100%;
 }
 
 select.form-control:focus, select.asColorPicker-input:focus, .dataTables_wrapper select:focus, .select2-container--default select.select2-selection--single:focus, .select2-container--default .select2-selection--single select.select2-search__field:focus, select.typeahead:focus,

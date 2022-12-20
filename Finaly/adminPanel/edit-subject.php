@@ -14,15 +14,18 @@ if (strlen($_SESSION['id']==0))
     if(isset($_POST['submit']))
     {
         
-
+        $number=$_POST['number'];
         $name=$_POST['name'];
+        $prog=$_POST['program'];
         $semster=$_POST['semster'];
         $lecturer=$_POST['lecturer'];
         
         $queryy="UPDATE subject set
                         Su_Name ='$name',
                         semster ='$semster',
-                        Le_ID ='$lecturer'
+                        Su_Chapter='$number',
+                        Le_ID ='$lecturer',
+                        P_ID= '$prog'
                         where
                         Su_ID ='$leid'";
 
@@ -110,6 +113,7 @@ if (strlen($_SESSION['id']==0))
                       <th>The program</th>
                       <th>Name</th>
                       <th>Semster</th>
+                      <th>Chapter</th>
                       <th>The lecturer</th>
                       
                     </tr>
@@ -121,7 +125,7 @@ if (strlen($_SESSION['id']==0))
                 {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
-                    <td><select class="form-control" name="program">
+                    <td><select class="form-select" name="program">
                         <option value="<?php echo $row['P_ID'];?>"><?php echo $row['P_Name'];?></option>
                         <?php $queryP = " SELECT * FROM program where D_ID='$Did'  ";
                                 $resP = mysqli_query($conn,$queryP);
@@ -133,8 +137,8 @@ if (strlen($_SESSION['id']==0))
 
                       <td><input name="name" class="form-control" value="<?php echo $row['Su_Name']; ?>" required /></td>
                       <td>
-                        <select class="form-control" name="semster">
-                          <option value="<?php echo $row['semster'];?>"><?php echo $row['semster'];?></option>
+                        <select class="form-select" name="semster">
+                          <option  value="<?php echo $row['semster'];?>"><?php echo $row['semster'];?></option>
                           <option value="1">one</option>
                           <option value="2">two</option>
                           <option value="3">three</option>
@@ -144,9 +148,9 @@ if (strlen($_SESSION['id']==0))
                           <option value="7">seven</option>
                         </select>
                       </td>
+                      <td><input class="form-control" name="number" type="number" value="<?php echo $row['Su_Chapter'] ?>"></td>
                       <td>
-                        <select class="form-control" name="lecturer">
-                        <option value="<?php echo $row['Le_ID'];?>"><?php echo $row['Le_Name'];?></option>
+                        <select class="form-select" name="lecturer">
 
                           <?php $queryLe = " SELECT * FROM lecturer ";
                                 $resLe = mysqli_query($conn,$queryLe);

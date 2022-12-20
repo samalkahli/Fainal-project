@@ -87,6 +87,7 @@ if (strlen($_SESSION['id']==0))
                       <th>The Program</th>
                       <th>Name</th>
                       <th>Semster</th>
+                      <th>Chapter</th>
                       <th>The lecturer</th>
                       <th>Action</th>
                     </tr>
@@ -102,6 +103,7 @@ if (strlen($_SESSION['id']==0))
                       <td><?php echo $row['P_Name']; ?></td>
                       <td><?php echo $row['Su_Name']; ?></td>
                       <td><?php echo $row['semster']; ?></td>
+                      <td><?php echo $row['Su_Chapter']; ?></td>
                       <td><?php echo $row['Le_Name']; ?></td>  
                       <td>
                       <a href="edit-subject.php?id=<?php echo $row['Su_ID'];?>&Did=<?php echo $row['D_ID'];?>">

@@ -29,6 +29,7 @@ if (strlen($_SESSION['id']==0))
     $semster='';
     $lecturer='';
     $program='';
+    $number='';
     $errors=array();
     
     if(empty($_POST['name']))
@@ -65,10 +66,18 @@ if (strlen($_SESSION['id']==0))
     {
         $program = mysqli_real_escape_string($conn, trim($_POST['program']));
     }
+    if(empty($_POST['number']))
+    {
+        $errors[] = 'select chapter';
+    }
+    else
+    {
+        $number = mysqli_real_escape_string($conn, trim($_POST['number']));
+    }
     
     if(empty($errors))
     {
-        $query = "INSERT INTO subject (Su_Name, semster, Le_ID, P_ID) VALUES ('$name','$semster','$lecturer','$program')";
+        $query = "INSERT INTO subject (Su_Name, semster,Su_Chapter, Le_ID, P_ID) VALUES ('$name','$semster','$number','$lecturer','$program')";
         $r = @mysqli_query($conn ,$query);
   
         if($r)
@@ -170,6 +179,10 @@ if (strlen($_SESSION['id']==0))
                 <?php }
                ?>
             </select>
+                </div>
+                <div class="field padding-bottom--24">
+                  <label for="name">Chapter's</label>
+                  <input type="number" value="1" name="number" max="8" min="1">
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="name">Name The Subject</label>
