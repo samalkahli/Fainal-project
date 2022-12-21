@@ -1,14 +1,15 @@
 <script>
 $(document).ready(function(){
-  $(".h6").mouseenter(function(){
+  $("#text").mouseenter(function(){
     $(".div").show();
 
   });
-  $(".h6").mouseleave(function(){
+  $("#text").mouseleave(function(){
     $(".div").hide();
   });
 });
 </script>
+<option value="0"> Select The CILOs </option> 
 <?php 
 include_once('../includes/conn.php');
 $Sid = $_GET['id'];
@@ -22,20 +23,13 @@ if ($num > 0)
 while ($row = mysqli_fetch_assoc($result))
 {
 ?>
-<label>The Title</label>
-<h4><?php echo $row['C_Title'];?></h4>
-<div class="field padding-bottom--24">
-    <div class="h6" style="cursor: pointer;">
-        <h6 class="h6" ><?php echo $row['C_Alias'].$i; $i++;?></h6>
-    </div>
-    <h5 class="div" style="display: none;" >
-    <span class="div"><?php echo $row['C_Text']; ?></span>
-    </h5>
-</div> 
+<option id="text"><?php echo $row['C_Alias'].$i; $i++?></option> 
 
+<?php }?>
+<h5 class="div"  >
+<span class="div"><?php echo $row['C_Text']; ?></span>
+</h5>
 <?php }
-
-}
 else {
 ?><h5>you don't have any CILOs in this chapter</h5>
 <?php } ?>

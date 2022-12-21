@@ -196,8 +196,9 @@ if (strlen($_SESSION['id']==0))
                         </a>
                 </h4>
                         <div>
-                          <?php $query=" SELECT * FROM cilo "; 
+                          <?php $query=" SELECT * FROM quation where Ex_ID = $E_ID "; 
                           $res = mysqli_query($conn,$query);
+                          
                           
                           
                           ?>
@@ -205,11 +206,10 @@ if (strlen($_SESSION['id']==0))
                         <div class="collapse" id="div" style="margin: 20px;">
                         <div class="field padding-bottom--24">
                           <label for="name">Chapter's</label>
-                          <input type="number" name="chapter" id="chapter" onchange="getData('title')" title="Plase Select The Chapter" value="0" min="1" max="8">
+                          <input type="number" name="chapter" id="chapter" onchange="getData('cilo')" title="Plase Select The Chapter" value="0" min="1" max="8">
                         </div>
-                        <div id="drop" class="field padding-bottom--24">
-                                 
-                        </div>
+                        <select id="drop" class="form-control" name="cilos">
+                        </select>
                       </div>
               </div>
             </div>

@@ -103,5 +103,36 @@ function getData(data)
     else
     return false;
   }
+  if(data == 'cilo')
+  {
+    // console.log(window.location);
+
+    var title = document.getElementById('chapter').value;
+    var drop = document.getElementById('drop').value;
+    var id = window.location.search;
+    const urlPar = new URLSearchParams(id);
+    const Cid = urlPar.get('id');
+    $("#title").empty();
+    
+   if (title > 0 )
+    {
+      // alert(title);
+      // alert(Cid);
+      $.get("getCilos.php?data=title&id="+Cid+"&chid="+title, function(data, status)
+      {
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#drop").empty(); 
+          $('#drop').append(data);
+          $(document).ready(function(){
+            $("#text").on("click", function(){
+              $(".div").show();
+            });
+          });
+      });
+    }
+    else
+    return false;
+  }
 
 }
+

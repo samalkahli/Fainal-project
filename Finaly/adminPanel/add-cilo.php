@@ -230,7 +230,7 @@ if (strlen($_SESSION['id']==0))
                               </div>
                               
                              <?php 
-                             } else{echo "tytyt";} ?>
+                             } else{echo "You don't have CILOs ";} ?>
                       
                     </form>
                     </div>
