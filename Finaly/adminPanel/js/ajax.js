@@ -78,5 +78,30 @@ function getData(data)
     else 
     return false;
   }
+  if(data == 'title')
+  {
+    // console.log(window.location);
+
+    var title = document.getElementById('chapter').value;
+    var drop = document.getElementById('drop').value;
+    var id = window.location.search;
+    const urlPar = new URLSearchParams(id);
+    const Cid = urlPar.get('id');
+    $("#title").empty();
+    
+   if (title > 0 )
+    {
+      // alert(title);
+      // alert(Cid);
+      $.get("getTitle.php?data=title&id="+Cid+"&chid="+title, function(data, status)
+      {
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#drop").empty(); 
+          $('#drop').append(data);
+      });
+    }
+    else
+    return false;
+  }
 
 }

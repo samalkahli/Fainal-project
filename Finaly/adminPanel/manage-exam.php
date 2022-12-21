@@ -115,7 +115,7 @@ if (strlen($_SESSION['id']==0))
                       
                       
                       <td>
-                      <a href="edit-exam.php?d_id=<?php echo $row['D_ID']; ?>&id=<?php echo $row['Ex_ID'];?>">
+                      <a href="edit-exam.php?d_id=<?php echo $row['D_ID']; ?>&id=<?php echo $row['Su_ID'];?>&e_id=<?php echo $row['Ex_ID'];?>">
                       <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>
                                                               
                       <a href="manage-exam.php?id=<?php echo $row['Ex_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">

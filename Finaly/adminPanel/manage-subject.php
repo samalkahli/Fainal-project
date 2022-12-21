@@ -107,7 +107,9 @@ if (strlen($_SESSION['id']==0))
                       <td><?php echo $row['Le_Name']; ?></td>  
                       <td>
                       <a href="edit-subject.php?id=<?php echo $row['Su_ID'];?>&Did=<?php echo $row['D_ID'];?>">
-                      <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>                                        
+                      <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>
+                      <a href="add-cilo.php?id=<?php echo $row['Su_ID'];?>&Did=<?php echo $row['D_ID'];?>">
+                      <button class="btn btn-dark"><i class="fa fa-edit "></i> Add CILOs</button> </a> 
                       <a href="manage-subject.php?id=<?php echo $row['Su_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
                       <button class="btn btn-danger">Delete</button>
                       </a>

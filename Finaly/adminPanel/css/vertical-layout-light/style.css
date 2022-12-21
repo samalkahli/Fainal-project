@@ -23628,6 +23628,54 @@ code {
   margin-bottom: 1.5rem;
 }
 
+  .form-control {
+    width: 90%;
+    height: calc(2.25rem + 2px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+  }
+  .field input {
+    font-size: 16px;
+    line-height: 28px;
+    padding: 8px 16px;
+    width: 100%;
+    min-height: 44px;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    font-weight: 400;
+    height: 2rem;
+  }
+
+  .btnn
+  {
+    width: 100%;
+  }
+
+  label {
+    margin-bottom: 10px;
+  }
+  .padding-top--64 {
+  padding-top: 64px;
+  }
+  .padding-top--24 {
+  padding-top: 24px;
+  }
+  .padding-top--48 {
+  padding-top: 48px;
+  }
+  .padding-bottom--24 {
+  padding-bottom: 24px;
+  }
+  .padding-horizontal--48 {
+  padding: 48px;
+  }
+  .padding-bottom--15 {
+   padding-bottom: 15px;
+  }
+
+
 .input-group-append,
 .input-group-prepend {
   color: #c9c8c8;

@@ -8,8 +8,9 @@ if (strlen($_SESSION['id']==0))
   {
   header('location:../outSession.php');
   }
-  else{ 
-    $leid=intval($_GET['id']);
+  else{
+    $S_ID=intval($_GET['id']); 
+    $E_ID=intval($_GET['e_id']);
     $D_ID=intval($_GET['d_id']);
     if(isset($_POST['submit']))
     {
@@ -57,7 +58,7 @@ if (strlen($_SESSION['id']==0))
   <link rel="stylesheet" href="vendors/typicons/typicons.css">
   <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-  <script src="js/ajax.js"> </script>
+  <script src="js/ajax.js"></script>
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -68,57 +69,7 @@ if (strlen($_SESSION['id']==0))
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
 </head>
-<style>
-  .form-control {
-  width: 90%;
-  height: calc(2.25rem + 2px);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-}
-  .field input {
-    font-size: 16px;
-    line-height: 28px;
-    padding: 8px 16px;
-    width: 100%;
-    min-height: 44px;
-    border-radius: 4px;
-    border: 1px solid #dee2e6;
-    font-weight: 400;
-    height: 2rem;
-}
 
-.btnn
-{
-  width: 100%;
-}
-
-label {
-    margin-bottom: 10px;
-}
-.padding-top--64 {
-  padding-top: 64px;
-}
-.padding-top--24 {
-  padding-top: 24px;
-}
-.padding-top--48 {
-  padding-top: 48px;
-}
-.padding-bottom--24 {
-  padding-bottom: 24px;
-}
-.padding-horizontal--48 {
-  padding: 48px;
-}
-.padding-bottom--15 {
-  padding-bottom: 15px;
-}
-
-
-
-</style>
 <body>
     
   <div class="container-scroller">
@@ -149,7 +100,7 @@ label {
                         $query= "SELECT exam.*, subject.*
                         FROM exam
                         LEFT JOIN subject on exam.Su_ID = subject.Su_ID  
-                        where Ex_ID='$leid'";
+                        where Ex_ID='$E_ID'";
 
                           $result = mysqli_query($conn,$query);
                           if(mysqli_num_rows($result) > 0)
@@ -215,8 +166,8 @@ label {
                           </select>
                         </div>
                         <div class="field padding-bottom--24">
-                            <label>Date Of Created</label>
-                            <input value= "<?php echo $row['Ex_Date'];?>" readonly>
+                            <label>Date Of Created :</label><br>
+                            <label> <?php echo $row['Ex_Date'];?></label>
                         </div>
                         <?php
                       }
@@ -229,6 +180,13 @@ label {
                 </div>
               </div>
             </div>
+
+
+
+
+
+
+
             <div class="col-md-6" style="margin-top: 10px;">
               <div class="card">
                 <div class="card-body "> 
@@ -236,14 +194,21 @@ label {
                         <a data-bs-toggle="collapse" href="#div" aria-expanded="false" aria-controls="ui-basic">
                          <button class="menu-title btn btn-primary btn-sm">Add Qution</button>
                         </a>
+                </h4>
                         <div>
-                        
+                          <?php $query=" SELECT * FROM cilo "; 
+                          $res = mysqli_query($conn,$query);
+                          
+                          
+                          ?>
                         </div>
                         <div class="collapse" id="div" style="margin: 20px;">
                         <div class="field padding-bottom--24">
                           <label for="name">Chapter's</label>
-                          <input name="form-control" type="text" value="1" name="number" max="8" min="1">
-                        
+                          <input type="number" name="chapter" id="chapter" onchange="getData('title')" title="Plase Select The Chapter" value="0" min="1" max="8">
+                        </div>
+                        <div id="drop" class="field padding-bottom--24">
+                                 
                         </div>
                       </div>
               </div>
