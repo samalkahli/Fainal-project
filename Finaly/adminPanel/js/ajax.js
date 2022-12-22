@@ -123,11 +123,6 @@ function getData(data)
         //alert("Data: " + fact + "\nStatus: " + status); 
           $("#drop").empty(); 
           $('#drop').append(data);
-          $(document).ready(function(){
-            $("#text").on("click", function(){
-              $(".div").show();
-            });
-          });
       });
     }
     else

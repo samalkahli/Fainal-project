@@ -190,27 +190,47 @@ if (strlen($_SESSION['id']==0))
             <div class="col-md-6" style="margin-top: 10px;">
               <div class="card">
                 <div class="card-body "> 
-                <h4 class="card-title">Add Qution 
+                <h4 class="card-title">Add Question 
                         <a data-bs-toggle="collapse" href="#div" aria-expanded="false" aria-controls="ui-basic">
-                         <button class="menu-title btn btn-primary btn-sm">Add Qution</button>
+                         <button class="menu-title btn btn-primary btn-sm">Add Questionn</button>
                         </a>
                 </h4>
                         <div>
                           <?php $query=" SELECT * FROM quation where Ex_ID = $E_ID "; 
                           $res = mysqli_query($conn,$query);
-                          
+                          // $num = mysqli_num_rows($res);
+                          // if ($num > 0)
+                          // {
+
+                          // }
+                          // else
+                          // {
+                          //   echo "You don't have any Question";
+                          // }
                           
                           
                           ?>
                         </div>
                         <div class="collapse" id="div" style="margin: 20px;">
                         <div class="field padding-bottom--24">
-                          <label for="name">Chapter's</label>
+                        <label for="name">Import the question from Excel File</label>
+                        <input type="file" class="form-control" >
+                        </div>
+                        <div class="field padding-bottom--24">  
+                        <label for="name">Chapter's</label>
                           <input type="number" name="chapter" id="chapter" onchange="getData('cilo')" title="Plase Select The Chapter" value="0" min="1" max="8">
                         </div>
+                        <div class="field padding-bottom--24">  
+                          <label>Select The CILOs</label>
                         <select id="drop" class="form-control" name="cilos">
+
                         </select>
-                      </div>
+                        </div>
+                        <div class="field padding-bottom--24">
+                          <label for="name">The Question</label>
+                          <input type="text" name="question">
+                        </div>
+                        </div>
               </div>
             </div>
             </div>

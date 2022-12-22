@@ -26,7 +26,7 @@ while ($row = mysqli_fetch_assoc($result))
 <option id="text"><?php echo $row['C_Alias'].$i; $i++?></option> 
 
 <?php }?>
-<h5 class="div"  >
+<h5 class="div">
 <span class="div"><?php echo $row['C_Text']; ?></span>
 </h5>
 <?php }

@@ -174,7 +174,7 @@ if (strlen($_SESSION['id']==0))
                         </div>
                         <div class="field padding-bottom--24">
                             <label>Select The Chapter </label>
-                            <input type="number" name="chapter" value="1" min="1" max="8" >
+                            <input type="number" name="chapter" value="1" min="1" max="<?php echo $row['Su_Chapter'];?>" >
                         </div>
                         <div class="field padding-bottom--24">
                             <label>Text of CILOs </label>

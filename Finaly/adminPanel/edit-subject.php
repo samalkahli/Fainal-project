@@ -148,7 +148,7 @@ if (strlen($_SESSION['id']==0))
                           <option value="7">seven</option>
                         </select>
                       </td>
-                      <td><input class="form-control" name="number" type="number" value="<?php echo $row['Su_Chapter'] ?>"></td>
+                      <td><input class="form-control" name="number" type="number" value="<?php echo $row['Su_Chapter'] ?>" min="1" max="8"></td>
                       <td>
                         <select class="form-select" name="lecturer">
 
