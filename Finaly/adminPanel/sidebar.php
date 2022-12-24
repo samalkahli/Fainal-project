@@ -15,8 +15,8 @@
             </a>
             <div class="collapse" id="ui-basicc">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/add-faculty.php">Add Faculty</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/add-department.php">Add Department</a></li>
+                <li class="nav-item"> <a class="nav-link" href="add-faculty.php">Add Faculty</a></li>
+                <li class="nav-item"> <a class="nav-link" href="add-department.php">Add Department</a></li>
 
               </ul>
             </div>
@@ -30,7 +30,7 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/add-Program.php">Add Program</a></li>
+                <li class="nav-item"> <a class="nav-link" href="add-Program.php">Add Program</a></li>
                 <li class="nav-item"> <a class="nav-link" href="manage-Program.php">Manage Program</a></li>
               </ul>
             </div>
@@ -60,7 +60,7 @@
             </a>
             <div class="collapse" id="form-elementss">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/add-subject">Add Subject</a></li>
+                <li class="nav-item"><a class="nav-link" href="add-subject">Add Subject</a></li>
                 <li class="nav-item"><a class="nav-link" href="manage-subject.php">manage Subject</a></li>
               </ul>
           </li>

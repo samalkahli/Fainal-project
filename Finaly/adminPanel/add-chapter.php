@@ -214,7 +214,7 @@ if (strlen($_SESSION['id']==0))
 
                           $result = mysqli_query($conn,$query);
                           $num = mysqli_num_rows($result);
-                          //var_dump($num);
+                          //var_dump($row);
                             
                           if($num >0)
                           {

@@ -5,11 +5,11 @@ function getData(data)
   {
     //console.log( $('fact') );
     var fact = document.getElementById('fact').value;
-    // alert(fact);
+     //alert(fact);
     $("#department").empty();
     if(fact>0)
     {
-      $.get("getDepartment.php?data=dep&fact="+fact, function(data, status)
+      $.get("pages/getDepartment.php?data=dep&fact="+fact, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 
           $("#department").empty(); 
@@ -29,7 +29,7 @@ function getData(data)
     $("#program").empty();
     if(department>0)
     {
-      $.get("getProgram.php?data=pro&department="+department, function(data, status)
+      $.get("pages/getProgram.php?data=pro&department="+department, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 
           $("#program").empty(); 

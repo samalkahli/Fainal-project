@@ -14,7 +14,6 @@ if (strlen($_SESSION['id']==0))
     if(isset($_POST['submit']))
     {
         
-        $number=$_POST['number'];
         $name=$_POST['name'];
         $prog=$_POST['program'];
         $semster=$_POST['semster'];
@@ -23,7 +22,6 @@ if (strlen($_SESSION['id']==0))
         $queryy="UPDATE subject set
                         Su_Name ='$name',
                         semster ='$semster',
-                        Su_Chapter='$number',
                         Le_ID ='$lecturer',
                         P_ID= '$prog'
                         where
@@ -113,7 +111,6 @@ if (strlen($_SESSION['id']==0))
                       <th>The program</th>
                       <th>Name</th>
                       <th>Semster</th>
-                      <th>Chapter</th>
                       <th>The lecturer</th>
                       
                     </tr>
@@ -148,7 +145,6 @@ if (strlen($_SESSION['id']==0))
                           <option value="7">seven</option>
                         </select>
                       </td>
-                      <td><input class="form-control" name="number" type="number" value="<?php echo $row['Su_Chapter'] ?>" min="1" max="8"></td>
                       <td>
                         <select class="form-select" name="lecturer">
 

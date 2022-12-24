@@ -9752,6 +9752,7 @@ progress {
   .row-cols-md-6 > * {
     flex: 0 0 auto;
     width: 16.66667%;
+    
   }
   .col-md-auto {
     flex: 0 0 auto;
@@ -9780,6 +9781,7 @@ progress {
   .col-md-6 {
     flex: 0 0 auto;
     width: 50%;
+    margin: auto  ;
   }
   .col-md-7 {
     flex: 0 0 auto;
@@ -28915,6 +28917,7 @@ div.tagsinput span.tag a {
   display: flex;
   -webkit-flex-direction: column;
   flex-direction: column;
+  
 }
 
 @media (max-width: 991px) {
@@ -28930,7 +28933,14 @@ div.tagsinput span.tag a {
   width: 100%;
   -webkit-flex-grow: 1;
   flex-grow: 1;
+  background-image:  url(../../../images/Logo.png) ;
+  background-size: 632px;
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;;
+  image-orientation: unset;
 }
+
 
 @media (max-width: 767px) {
   .content-wrapper {
