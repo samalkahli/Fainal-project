@@ -71,7 +71,6 @@ if (strlen($_SESSION['id']==0))
       echo '</p><p>Plasse try again.</p><p><br /></p>';  
     }
 
-    mysqli_close($conn);
     }
    ?>
 <!DOCTYPE html>
@@ -137,10 +136,6 @@ if (strlen($_SESSION['id']==0))
                         where Su_ID = '$Sid'";
 
                           $result = mysqli_query($conn,$query);
-                          $row=mysqli_num_rows($result);
-
-                          if($row> 0)
-                          {
                             //var_dump($row);
                           while($row = mysqli_fetch_assoc($result))
                             {?>
@@ -160,7 +155,13 @@ if (strlen($_SESSION['id']==0))
                         <div class="field padding-bottom--24">
 
                             <label>Title of CILOs </label>
-                            <input type="text" name="title" >
+                            <select class="form-control" name="title" required>
+                            <option value="">Select The Title :</option>
+                            <option value="Knowledge and Understanding">Knowledge and Understanding</option>
+                            <option value="Intellectual Skills">Intellectual Skills</option>
+                            <option value="Professional and Practical Skills">Professional and Practical Skills</option>
+                            <option value="Transferable Skills">Transferable Skills</option>
+                          </select>
                         </div>
                         <div class="field padding-bottom--24">
                             <label>Alias</label>
@@ -182,10 +183,8 @@ if (strlen($_SESSION['id']==0))
                         </div>
                         
                         <?php
-                      }
 
-                      }
-                      else echo "You doesn't have any Subject";?>
+                      } ?>
                     <button name="submit" type="submit"  class="btn btnn btn-primary" ><i class="fa fa-edit "></i> update</button> 
                     </form>
                     </div>
@@ -206,15 +205,15 @@ if (strlen($_SESSION['id']==0))
                   <h4 class="card-title" >Manage CILOs</h4>
                   <div class="table-responsive">
                     <form method="post"><?php 
-                    $query= "SELECT cilo.*, subject.*
+                    $que= "SELECT cilo.*, chapter.*
                         FROM cilo
-                        LEFT JOIN subject USING (Su_ID)
-                        where Su_ID = '$Sid'  
+                        LEFT JOIN chapter on chapter.Ch_ID = cilo.Ch_ID
+                          
                         ";
 
-                          $result = mysqli_query($conn,$query);
+                          $result = mysqli_query($conn,$que);
                           $num = mysqli_num_rows($result);
-                          //var_dump($num);
+                          //var_dump($result);
                             
                           if($num >0)
                           {

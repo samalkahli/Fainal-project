@@ -68,7 +68,10 @@ if (strlen($_SESSION['id']==0))
                 <h4 class="card-title">Lecturer Table</h4>
                   <div class="table-responsive">
                   <?php
-                    $query= "SELECT * FROM program";
+                    $query= "SELECT faculty.*, department.*, program.*
+                    FROM faculty 
+                      LEFT JOIN department ON department.F_ID = faculty.F_ID 
+                      LEFT JOIN program ON program.D_ID = department.D_ID;";
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result)> 0)
@@ -77,7 +80,9 @@ if (strlen($_SESSION['id']==0))
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Name</th>
+                      <th>Name the Facukty</th>
+                      <th>Name the Department</th>
+                      <th>Name the Program</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -88,6 +93,8 @@ if (strlen($_SESSION['id']==0))
                 {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
+                      <td><?php echo $row['F_Name']; ?></td>
+                      <td><?php echo $row['D_Name']; ?></td>
                       <td><?php echo $row['P_Name']; ?></td>
 
                       <td>

@@ -68,7 +68,8 @@ if (strlen($_SESSION['id']==0))
                 <h4 class="card-title">Department Table</h4>
                   <div class="table-responsive">
                   <?php
-                    $query= "SELECT * FROM department";
+                    $query= "SELECT * FROM faculty
+                    left join department using (F_ID)";
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result)> 0)
@@ -77,7 +78,8 @@ if (strlen($_SESSION['id']==0))
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Name</th>
+                      <th>Name the Faculty</th>
+                      <th>Name the Department</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -88,8 +90,8 @@ if (strlen($_SESSION['id']==0))
                 {?>
                     <tr>
                     <td><?php echo $i; $i++; ?></td>
+                      <td><?php echo $row['F_Name']; ?></td>
                       <td><?php echo $row['D_Name']; ?></td>
-
                       <td>
                       <a href="edit-department.php?id=<?php echo $row['D_ID'];?>">
                       <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>                                        

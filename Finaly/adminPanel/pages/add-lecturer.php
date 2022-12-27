@@ -168,9 +168,9 @@ if (strlen($_SESSION['id']==0))
                 <div class=" field-checkbox padding-bottom--24">
                 <label>Degree</label>
               
-                <input class="redio" type="radio" name="degree" value="Prof.">Prof.</input>
-                <input class="redio" type="radio" name="degree" value="Doctor">Doctor</input>
-                <input class="redio" type="radio" name="degree" value="Master">Master</input><br style="margin: 20px;">
+                <input class="redio" type="radio" name="degree" value="Prof.">Prof.
+                <input class="redio" type="radio" name="degree" value="Doctor">Doctor
+                <input class="redio" type="radio" name="degree" value="Master">Master <br style="margin: 20px;">
                 <input class="redio" type="radio" name="degree" value="" id="oo" onclick="get()">Other </input>
                 </div>
                 <div id="other" class="field padding-bottom--24" hidden >

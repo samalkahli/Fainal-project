@@ -9,38 +9,14 @@ if (strlen($_SESSION['id']==0))
   header('location:../outSession.php');
   }
   else{
+    // $Chid = intval($_GET['Chid']); 
     $Sid = intval($_GET['id']); 
     if (isset($_POST['submit']))
     {
-        $title = '';
-        $alias = '';
-        $text='';
+        $topic = '';
+        $sub = '';
         $chapter = '';
         $errors=array();
-        if(empty($_POST['title']))
-        {
-            $errors[] = 'select title';
-        }
-        else
-        {
-            $title = mysqli_real_escape_string($conn, trim($_POST['title']));
-        }
-        if(empty($_POST['alias']))
-        {
-            $errors[] = 'select alias';
-        }
-        else
-        {
-            $alias = mysqli_real_escape_string($conn, trim($_POST['alias']));
-        }
-        if(empty($_POST['text']))
-        {
-            $errors[] = 'select text';
-        }
-        else
-        {
-            $text = mysqli_real_escape_string($conn, trim($_POST['text']));
-        }
         if(empty($_POST['chapter']))
         {
             $errors[] = 'select chapter';
@@ -49,15 +25,33 @@ if (strlen($_SESSION['id']==0))
         {
             $chapter = mysqli_real_escape_string($conn, trim($_POST['chapter']));
         }
+        if(empty($_POST['sub']))
+        {
+            $errors[] = 'select sub';
+        }
+        else
+        {
+            $sub = mysqli_real_escape_string($conn, trim($_POST['sub']));
+        }
+        if(empty($_POST['topic']))
+        {
+            $errors[] = 'select topic';
+        }
+        else
+        {
+            $topic = mysqli_real_escape_string($conn, trim($_POST['topic']));
+        }
         if(empty($errors))
         {
-            $query = " INSERT INTO cilo (C_Title, C_ALias, C_Text, C_Chapter, Su_ID ) VALUES ('$title', '$alias', '$text', '$chapter', '$Sid')";
-            $r = mysqli_query($conn ,$query);
+            $query = " INSERT INTO chapter (Ch_Number, Ch_Topic, Ch_SupTopic, Su_ID ) VALUES ('$chapter', '$topic', '$sub', '$Sid')";
+            $r = mysqli_query($conn ,$query);?>
+            <script type='text/javascript'> document.location = "add-chapter.php?id="<?php echo $Sid; ?> </script><?php
+            //var_dump($query);
         if($r)
         {
-            echo "<script>alert('DONE');</script>";
-            echo "<script type='text/javascript'> document.location = 'manage-subject.php' </script>";
-        }
+          echo "<script>alert('DONE');</script>";
+          echo "<script type='text/javascript'> document.location = 'manage-subject.php' </script>";
+      }
         
     }   
     else
@@ -71,8 +65,8 @@ if (strlen($_SESSION['id']==0))
       echo '</p><p>Plasse try again.</p><p><br /></p>';  
     }
 
-    mysqli_close($conn);
     }
+    else {
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,21 +123,17 @@ if (strlen($_SESSION['id']==0))
                 <div class="card-body">
                   <h4 class="card-title">Information About Subject</h4>
                   <div class="table-responsive">
-                    <form method="post">
+                    <form method="POST">
                     <?php
-                        $query= "SELECT subject.*, program.P_Name
+                        $query= "SELECT subject.*, program.P_Name, chapter.*
                         FROM subject
                         LEFT JOIN program ON subject.P_ID = program.P_ID 
+                        left join chapter using (Su_ID)
                         where Su_ID = '$Sid'";
 
                           $result = mysqli_query($conn,$query);
-                          $row=mysqli_num_rows($result);
-
-                          if($row> 0)
-                          {
-                            //var_dump($row);
-                          while($row = mysqli_fetch_assoc($result))
-                            {?>
+                           // var_dump($row);
+                          $row = mysqli_fetch_assoc($result); ?>
                       
                         <div class="field padding-bottom--24">
                           <label>The Subject</label>
@@ -155,38 +145,20 @@ if (strlen($_SESSION['id']==0))
                           <label>The Semster</label>
                               <h5><?php echo $row['semster'];?></h5>
                         </div>
-                        <h4 class="card-title">Add CILOs</h4>
-
                         <div class="field padding-bottom--24">
-
-                            <label>Title of CILOs </label>
-                            <input type="text" name="title" >
+                        <label>Chapter Number </label>
+                        <input type="number" name="chapter" id="chapter" onchange="getData('topic')" value="1" min="1" max="<?php echo $row['Su_Chapter']; ?>">
                         </div>
-                        <div class="field padding-bottom--24">
-                            <label>Alias</label>
-                            <select class="form-control" name="alias" required>
-                            <option value="">Select The Alias :</option>
-                            <option value="a">a</option>
-                            <option value="b">b</option>
-                            <option value="c">c</option>
-                            <option value="d">d</option>
-                          </select>
+                        <h4 class="card-title">Add Chapter</h4>
+                        <div class="field padding-bottom--24" id="drop">
                         </div>
-                        <div class="field padding-bottom--24">
-                            <label>Select The Chapter </label>
-                            <input type="number" name="chapter" value="1" min="1" max="<?php echo $row['Su_Chapter'];?>" >
-                        </div>
-                        <div class="field padding-bottom--24">
-                            <label>Text of CILOs </label>
-                            <input type="text" name="text" >
-                        </div>
+                        <div class="field padding-bottom--24" >
+                        <label>Sub Topic </label>
+                            <input type="text" name="sub"  >
+                        </div>  
                         
-                        <?php
-                      }
+                        <button class="btn btnn btn-primary" type="submit" name="submit" >Continue</button>
 
-                      }
-                      else echo "You doesn't have any Subject";?>
-                    <button name="submit" type="submit"  class="btn btnn btn-primary" ><i class="fa fa-edit "></i> update</button> 
                     </form>
                     </div>
                 </div>
@@ -201,34 +173,36 @@ if (strlen($_SESSION['id']==0))
 
 
             <div class="col-md-6">
+              <!-- here the code-->
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title" >Manage CILOs</h4>
+                  <h4 class="card-title">Information About Subject</h4>
                   <div class="table-responsive">
-                    <form method="post"><?php 
-                    $query= "SELECT cilo.*, subject.*
-                        FROM cilo
+                  <form method="post">
+                    <?php 
+                    $query= "SELECT chapter.*, subject.*
+                        FROM chapter
                         LEFT JOIN subject USING (Su_ID)
                         where Su_ID = '$Sid'  
                         ";
 
                           $result = mysqli_query($conn,$query);
                           $num = mysqli_num_rows($result);
-                          //var_dump($row);
+                          //var_dump($num);
                             
                           if($num >0)
                           {
                          $row = mysqli_fetch_assoc($result);
                             ?>
                             
-                              <div id="drop" class="field padding-bottom--24">
-                                 
-                              </div>
+                              
                               <div class="field padding-bottom--24">
                                 <label>The Chapter</label>
-                                    <input type="number" name="chapter" id="chapter" onchange="getData('title')" title="Plase Select The Chapter" value="0" min="1" max="8">
+                                <input type="number" name="chapter" id="chapterNo" onchange="getData('subtopic')" title="Plase Select The Chapter" value="1" min="1" max="<?php echo $row['Su_Chapter'];?>">
                               </div>
-                              
+                              <div id="sub" class="field padding-bottom--24">
+                                 
+                              </div>
                              <?php 
                              } else{echo "You don't have CILOs ";} ?>
                       
@@ -237,7 +211,7 @@ if (strlen($_SESSION['id']==0))
                 </div>
               </div>
             </div>
-            </div>
+          </div>
         </div> 
       </div>
       <!-- main-panel ends -->
@@ -246,6 +220,11 @@ if (strlen($_SESSION['id']==0))
   </div>
 
   <!-- container-scroller -->
+
+  <script>
+
+
+  </script>
 
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
@@ -267,7 +246,7 @@ if (strlen($_SESSION['id']==0))
   <script src="js/jquery.cookie.js" type="text/javascript"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/Chart.roundedBarCharts.js"></script>
-                <?php }?>
+                <?php } }?>
   <!-- End custom js for this page-->
 </body>
 </html>
