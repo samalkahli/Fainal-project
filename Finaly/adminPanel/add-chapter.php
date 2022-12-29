@@ -147,7 +147,7 @@ if (strlen($_SESSION['id']==0))
                         </div>
                         <div class="field padding-bottom--24">
                         <label>Chapter Number </label>
-                        <input type="number" name="chapter" id="chapter" onchange="getData('topic')" value="1" min="1" max="<?php echo $row['Su_Chapter']; ?>">
+                        <input type="number" name="chapter" id="chapter" onchange="getData('topic')" placeholder="Select the Chapter Number..." min="1" max="<?php echo $row['Su_Chapter']; ?>">
                         </div>
                         <h4 class="card-title">Add Chapter</h4>
                         <div class="field padding-bottom--24" id="drop">
@@ -198,7 +198,7 @@ if (strlen($_SESSION['id']==0))
                               
                               <div class="field padding-bottom--24">
                                 <label>The Chapter</label>
-                                <input type="number" name="chapter" id="chapterNo" onchange="getData('subtopic')" title="Plase Select The Chapter" value="1" min="1" max="<?php echo $row['Su_Chapter'];?>">
+                                <input type="number" name="chapter" id="chapterNo" onchange="getData('subtopic')" title="Plase Select The Chapter" placeholder="Select The Chapter Number..." min="1" max="<?php echo $row['Su_Chapter'];?>">
                               </div>
                               <div id="sub" class="field padding-bottom--24">
                                  

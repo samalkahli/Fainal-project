@@ -156,7 +156,9 @@ function getData(data)
   if(data == 'topic')
   {
     // console.log(window.location);
-
+    var id = window.location.search;
+    const urlPar = new URLSearchParams(id);
+    const Cid = urlPar.get('id');
     var title = document.getElementById('chapter').value;
     var drop = document.getElementById('drop').value;
     $("#title").empty();
@@ -164,8 +166,8 @@ function getData(data)
    if (title > 0 )
     {
       // alert(title);
-      // alert(Cid);
-      $.get("getTopic.php?data=title&chid="+title, function(data, status)
+       //alert(Cid);
+      $.get("getTopic.php?data=title&chid="+title+"&id="+Cid, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 
           $("#drop").empty(); 
@@ -178,7 +180,9 @@ function getData(data)
   if(data == 'subtopic')
   {
     // console.log(window.location);
-
+    var id = window.location.search;
+    const urlPar = new URLSearchParams(id);
+    const Cid = urlPar.get('id');
     var title = document.getElementById('chapterNo').value;
     var sub = document.getElementById('sub').value;
     $("#title").empty();
@@ -187,7 +191,7 @@ function getData(data)
     {
       // alert(title);
       // alert(Cid);
-      $.get("getSubTopic.php?data=title&chapterid="+title, function(data, status)
+      $.get("getSubTopic.php?data=title&chapterid="+title+"&id="+Cid, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 
           $("#sub").empty(); 
@@ -197,7 +201,30 @@ function getData(data)
     else
     return false;
   }
-
+  if(data == 'subTCILO')
+  {
+    // console.log(window.location);
+    var id = window.location.search;
+    const urlPar = new URLSearchParams(id);
+    const Cid = urlPar.get('id');
+    var title = document.getElementById('chapterNo').value;
+    var sub = document.getElementById('sub').value;
+    $("#title").empty();
+    //alert(title);
+   if (title > 0 )
+    {
+      //alert(title);
+      //alert(Cid);
+      $.get("getSubTCILO.php?data=title&chapterid="+title+"&id="+Cid, function(data, status)
+      {
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#sub").empty(); 
+          $('#sub').append(data);
+      });
+    }
+    else
+    return false;
+  }
 
 
   

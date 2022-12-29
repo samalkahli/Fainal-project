@@ -215,7 +215,7 @@ if (strlen($_SESSION['id']==0))
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="name">Number Of Chapter</label>
-                  <input type="number" name="number" max="8" min="1" value="1" placeholder="Chapter ..">
+                  <input type="number" name="number" max="7" min="1" value="1" placeholder="Chapter ..">
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="name">Name The Subject</label>

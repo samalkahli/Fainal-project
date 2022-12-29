@@ -9,7 +9,8 @@ if (strlen($_SESSION['id']==0))
   header('location:../outSession.php');
   }
   else{
-    $Sid = intval($_GET['id']); 
+    $Sid = intval($_GET['id']);
+
     if (isset($_POST['submit']))
     {
         $title = '';
@@ -51,7 +52,7 @@ if (strlen($_SESSION['id']==0))
         }
         if(empty($errors))
         {
-            $query = " INSERT INTO cilo (C_Title, C_ALias, C_Text, C_Chapter, Su_ID ) VALUES ('$title', '$alias', '$text', '$chapter', '$Sid')";
+            $query = " INSERT INTO cilo (C_Title, C_ALias, C_Text, C_Chapter, Ch_ID ) VALUES ('$title', '$alias', '$text', '$chapter', '$value')";
             $r = mysqli_query($conn ,$query);
         if($r)
         {
@@ -175,7 +176,10 @@ if (strlen($_SESSION['id']==0))
                         </div>
                         <div class="field padding-bottom--24">
                             <label>Select The Chapter </label>
-                            <input type="number" name="chapter" value="1" min="1" max="<?php echo $row['Su_Chapter'];?>" >
+                            <input type="number" name="chapter" id="chapterNo" onchange="getData('subTCILO')" placeholder="Select The Chapter Number..." min="1" max="<?php echo $row['Su_Chapter'];?>" required>
+                        </div>
+                        <div id="sub">
+                        
                         </div>
                         <div class="field padding-bottom--24">
                             <label>Text of CILOs </label>

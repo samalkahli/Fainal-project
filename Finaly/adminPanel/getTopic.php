@@ -1,7 +1,8 @@
 <?php
 include_once('../includes/conn.php');
 $chapter = $_GET['chid'];
-$query = mysqli_query($conn, "SELECT * from chapter where Ch_Number = '$chapter'");
+$id = $_GET['id'];
+$query = mysqli_query($conn, "SELECT * from chapter where Ch_Number = '$chapter' and Su_ID = '$id'");
 $row = mysqli_fetch_assoc($query); 
 //var_dump($query);
 $num = mysqli_num_rows($query);

@@ -69,12 +69,16 @@ if (strlen($_SESSION['id']==0))
                 <h4 class="card-title">Subject Table</h4>
                   <div class="table-responsive">
                   <?php
+                  
                     $query= "SELECT subject.*, lecturer.Le_Name, program.P_Name, department.*
                               FROM subject
                               LEFT JOIN lecturer ON subject.Le_ID = lecturer.Le_ID 
                               LEFT JOIN program ON subject.P_ID = program.P_ID
                               LEFT JOIN department ON program.D_ID = department.D_ID
                                ";
+                    // $queryCh = mysqli_query($conn,"SELECT * from chapter where Su_ID = '$id'");
+                    // $rowCh = mysqli_fetch_assoc($queryCh);
+                    
 
                       $result = mysqli_query($conn,$query);
                       if(mysqli_num_rows($result) > 0)
@@ -111,10 +115,10 @@ if (strlen($_SESSION['id']==0))
                       <a href="edit-subject.php?id=<?php echo $row['Su_ID']; ?>&Did=<?php echo $row['D_ID'];?>">
                       <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>
 
-                      <a href="add-chapter.php?id=<?php echo $row['Su_ID']; ?>&Did=<?php echo $row['D_ID'];?>">
+                      <a href="add-chapter.php?id=<?php echo $row['Su_ID']; ?>">
                       <button class="btn btn-outline-success"><i class="fa fa-edit "></i> Chapter</button> </a>
 
-                      <a href="add-cilo.php?id=<?php echo $row['Su_ID'];?>&Did=<?php echo $row['D_ID'];?>">
+                      <a href="add-cilo.php?id=<?php echo $row['Su_ID'];?>">
                       <button class="btn btn-outline-dark btn-"><i class="fa fa-edit "></i>CILOs</button> </a>
 
                       <a href="manage-subject.php?id=<?php echo $row['Su_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
