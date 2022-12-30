@@ -8,100 +8,73 @@ if (strlen($_SESSION['id']==0))
   {
   header('location:../outSession.php');
   }
-  else{ ?>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <title>Sign in</title>  
-      <link rel="stylesheet" type="text/css" href="..\..\css\styleLogin.css">
-      <script src="../js/jquery.js"></script>
-      <script><?php include_once("../js/ajax.js")?></script>
-    
-    </head>
-    
-    <body>
-    <?php
-  if(isset($_POST['submit']))
-  {
-    include_once('../includes/conn.php');
-    $name='';
-    $semster='';
-    $lecturer='';
-    $number = '';
-    $program='';
-    $errors=array();
-    
-    if(empty($_POST['name']))
-    {
-        $errors[] = 'select name';
-    }
-    else
-    {
-        $name = mysqli_real_escape_string($conn, trim($_POST['name']));
-    }
-    
-    if(empty($_POST['semster']))
-    {
-        $errors[] = 'select semster'; 
-    }
-    else
-    {
-        $semster = mysqli_real_escape_string($conn, trim($_POST['semster']));
-    }
-    if(empty($_POST['lecturer']))
-    {
-        $errors[] = 'select lecturer';
-    }
-    else
-    {
-        $lecturer = mysqli_real_escape_string($conn, trim($_POST['lecturer']));
-    }
-    
-    if(empty($_POST['program']))
-    {
-        $errors[] = 'select program';
-    }
-    else
-    {
-        $program = mysqli_real_escape_string($conn, trim($_POST['program']));
-    }
-    if(empty($_POST['number']))
-    {
-        $errors[] = 'select number';
-    }
-    else
-    {
-        $number = mysqli_real_escape_string($conn, trim($_POST['number']));
-    }
-    
-    if(empty($errors))
-    {
-        $query = "INSERT INTO subject (Su_Name, semster,Su_Chapter, Le_ID, P_ID) VALUES ('$name','$semster','$number','$lecturer','$program')";
-        $r = @mysqli_query($conn ,$query);
+  else{
   
-        if($r)
+    if(isset($_POST['submit']))
+    {
+      $type='';
+      $time='';
+      $subject='';
+      $errors=array();
+      
+      if(empty($_POST['type']))
+      {
+          $errors[] = 'select type';
+      }
+      else
+      {
+          $type = mysqli_real_escape_string($conn, trim($_POST['type']));
+      }
+      
+      if(empty($_POST['time']))
+      {
+          $errors[] = 'select time'; 
+      }
+      else
+      {
+          $time = mysqli_real_escape_string($conn, trim($_POST['time']));
+      }
+      if(empty($_POST['subject']))
+      {
+          $errors[] = 'select subject'; 
+      }
+      else
+      {
+          $subject = mysqli_real_escape_string($conn, trim($_POST['subject']));
+      }
+      
+      if(empty($errors))
+      {
+          $query = "INSERT INTO exam (Ex_Type, Ex_Duration, Ex_Date, Su_ID) VALUES ('$type','$time',NOW(),'$subject')";
+          $r = @mysqli_query($conn ,$query);
+    
+          if($r)
+          {
+            echo "<script>alert('Profile updated successfully');</script>";
+            echo "<script type='text/javascript'> document.location = 'manage-exam.php' </script>";
+  
+          }
+          
+      }   
+      else
+      {
+        echo '<h1> Error!</h1>
+        <p calss="error">The following error(s) occurred:<br/>';
+        foreach ($errors as $msg)
         {
-          echo "<script>alert('Profile updated successfully');</script>";
-          echo "<script type='text/javascript'> document.location = 'manage-subject.php' </script>";
-
+          echo " - $msg<br />\n";
         }
-        
-    }   
+        echo '</p><p>Plasse try again.</p><p><br /></p>';  
+      }
+  
+      mysqli_close($conn);
+      }
+      
     else
     {
-      echo '<h1> Error!</h1>
-      <p calss="error">The following error(s) occurred:<br/>';
-      foreach ($errors as $msg)
-      {
-        echo " - $msg<br />\n";
-      }
-      echo '</p><p>Plasse try again.</p><p><br /></p>';  
-    }
-
-    mysqli_close($conn);
-    }
-    
-  ?>
+      /*function printForm($first_name="", $last_name="" ,$lecturer="")
+       {*/
+    ?>
 
 <head>
 <html lang="en">
@@ -118,6 +91,8 @@ if (strlen($_SESSION['id']==0))
   <link rel="stylesheet" href="vendors/typicons/typicons.css">
   <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- <link rel="stylesheet" type="text/css" href="..\css\styleLogin.css"> -->
+
   <script src="js/ajax.js"> </script>
   <!-- endinject -->
   <!-- Plugin css for this page -->
@@ -149,21 +124,22 @@ if (strlen($_SESSION['id']==0))
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
+         
             <div class="col-md-6">
               <!-- here the code-->
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Information About Subject</h4>
                   <div class="table-responsive">
-                  <form id="stripe-login" method="post">
+                  <form action="" method="post">
+                  <form id="stripe-login">
               <div class="field padding-bottom--24">
                   <label>Faculty</label>
                   
-                  <select  class="form-control" name="faculty" id="fact" onchange="getData('dep')">
+                  <select  class="form-control" name="faculty" id="fact" onchange="getData('dep')" required>
                     <option value="0">Select faculty:</option>
                     
                     <?php 
-              include_once('../includes/conn.php');
                 $selCourse = mysqli_query($conn,"SELECT * FROM faculty ORDER BY F_ID asc");
                 while ($selCourseRow = mysqli_fetch_assoc($selCourse)){ ?>
                   <option value="<?php echo $selCourseRow['F_ID']; ?>"><?php echo $selCourseRow['F_Name']; ?></option>
@@ -173,55 +149,61 @@ if (strlen($_SESSION['id']==0))
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="department">Department</label>
-                  <select  class="form-control" name="department" id="department" onchange="getData('pro')">
+                  <select  class="form-control" name="department" id="department" onchange="getData('pro')" required>
                    
 
                   </select>
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="program">Program</label>
-                  <select  class="form-control" name="program" id="program" >
+                  <select  class="form-control" name="program" id="program" onchange="getData('sub')" required>
                    
 
                   </select>
                 </div>
-             
                 <div class="field padding-bottom--24">
                 <label>Semster</label>
-            <select class="form-control" name="semster">
-              <option value="0">Select Semster</option>
-              <option value="1">one</option>
-              <option value="2">two</option>
-              <option value="3">three</option>
-              <option value="4">four</option>
-              <option value="5">five</option>
-              <option value="6">six</option>
-              <option value="7">seven</option>
-            </select>
-                </div>
-            
-            <div class="field padding-bottom--24">
-            <label>Lecturer</label>
-            <select class="form-control" name="lecturer">
-            <option value="0">Select Lecturer</option>
-              <?php 
-              include_once('../../includes/conn.php');
-                $selCourse = mysqli_query($conn,"SELECT * FROM lecturer ORDER BY Le_ID asc");
-                while ($selCourseRow = mysqli_fetch_assoc($selCourse)){ ?>
-                  <option value="<?php echo $selCourseRow['Le_ID']; ?>"><?php echo $selCourseRow['Le_Name']; ?></option>
-                <?php }
-               ?>
-            </select>
-                </div>
+                <select  class="form-control" name="semster" id="semster" onchange="getData('sem')" required >
+                <option value="0">select semster :</option>
+                <option value="1">one</option>
+                <option value="2">two</option>
+                <option value="3">three</option>
+                <option value="4">four</option>
+                <option value="5">five</option>
+                <option value="6">six</option>
+                <option value="7">seven</option>
+                   </select>
+                  
+            </div>
                 <div class="field padding-bottom--24">
-                  <label for="name">Number Of Chapter</label>
-                  <input type="number" name="number" max="7" min="1" value="1" placeholder="Chapter ..">
+                  <label for="subject">Subject</label>
+                  <select  class="form-control" name="subject" id="subject" >
+                   
+                  </select>
                 </div>
-                <div class="field padding-bottom--24">
-                  <label for="name">Name The Subject</label>
-                  <input type="text" name="name">
-                </div>
-               
+                <div class="field padding-bottom--24 ">
+            <label>Exam Type</label>
+            <select class="form-control" name="type" required>
+
+              <option value="">Select Type</option>
+              <option value="Sem Fainal">Sem Fainal</option>
+              <option value="Test">Test</option>
+              <option value="Fainal">Fainal</option> 
+
+            </select>
+          </div>
+                <div class="field padding-bottom--24 form-group">
+            <label>Exam Time Limit</label>
+            <select class="form-control" name="time" required>
+              <option value="0">Select time</option>
+              <option value="10">10 Minutes</option> 
+              <option value="20">20 Minutes</option> 
+              <option value="30">30 Minutes</option> 
+              <option value="40">40 Minutes</option> 
+              <option value="50">50 Minutes</option> 
+              <option value="60">60 Minutes</option> 
+            </select>
+          </div>
                 <div class="field padding-bottom--19">
                 <div class="formbg-inner">
 
@@ -231,29 +213,22 @@ if (strlen($_SESSION['id']==0))
               </form>
                     </div>
                 </div>
-              </div>
-            </div>
-
-
-
-
-
-
-
-
-           
+     </div> 
             </div>
         </div> 
       </div>
+      
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
+    
   </div>
 
   <!-- container-scroller -->
-  <?php include('footer.php');?>
 
   <!-- plugins:js -->
+  <?php include('footer.php');?>
+
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
@@ -273,7 +248,7 @@ if (strlen($_SESSION['id']==0))
   <script src="js/jquery.cookie.js" type="text/javascript"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/Chart.roundedBarCharts.js"></script>
-                <?php }?>
+                <?php } }?>
   <!-- End custom js for this page-->
 </body>
 </html>

@@ -16,7 +16,7 @@
     $password=$_POST['password'];
     $useremail = $_POST['email'];
 
-    $retLe= mysqli_query($conn,"SELECT * FROM lecturer where Le_Email='$useremail' AND Le_Pass='$password' ");
+    $retLe= mysqli_query($conn,"SELECT * FROM lecturer where Le_Email='$useremail' AND Le_Pass=SHA1('$password') ");
     $numLe= mysqli_fetch_array($retLe);
 
     $retAd= mysqli_query($conn,"SELECT * FROM admin where Ad_Email='$useremail' AND Ad_Pass='$password' ");

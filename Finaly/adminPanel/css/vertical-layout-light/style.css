@@ -28933,12 +28933,7 @@ div.tagsinput span.tag a {
   width: 100%;
   -webkit-flex-grow: 1;
   flex-grow: 1;
-  background-image:  url(../../../images/Logo.png) ;
-  background-size: 632px;
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;;
-  image-orientation: unset;
+ 
 }
 
 

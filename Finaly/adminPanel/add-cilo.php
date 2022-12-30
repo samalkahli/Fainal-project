@@ -52,8 +52,6 @@ if (strlen($_SESSION['id']==0))
         }
         if(empty($errors))
         {
-            $query = " INSERT INTO cilo (C_Title, C_ALias, C_Text, C_Chapter, Ch_ID ) VALUES ('$title', '$alias', '$text', '$chapter', '$value')";
-            $r = mysqli_query($conn ,$query);
         if($r)
         {
             echo "<script>alert('DONE');</script>";
@@ -243,13 +241,15 @@ if (strlen($_SESSION['id']==0))
             </div>
         </div> 
       </div>
+      
+
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
   </div>
 
   <!-- container-scroller -->
-
+<?php include('footer.php');?>
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->

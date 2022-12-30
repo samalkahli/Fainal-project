@@ -130,6 +130,7 @@ if (strlen($_SESSION['id']==0))
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
+  <?php include('footer.php');?>
 
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>

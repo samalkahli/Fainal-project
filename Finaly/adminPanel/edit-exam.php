@@ -214,7 +214,7 @@ if (strlen($_SESSION['id']==0))
                         <div class="collapse" id="div" style="margin: 20px;">
                         <div class="field padding-bottom--24">
                         <label for="name">Import the question from Excel File</label>
-                        <input type="file" class="form-control" >
+                        <input type="file" accept=".xls,.xlsx" class="form-control" >
                         </div>
                         <div class="field padding-bottom--24">  
                         <label for="name">Chapter's</label>
@@ -243,6 +243,7 @@ if (strlen($_SESSION['id']==0))
   </div>
 
   <!-- container-scroller -->
+  <?php include('footer.php');?>
 
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>

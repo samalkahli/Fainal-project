@@ -186,6 +186,7 @@ if (strlen($_SESSION['id']==0))
   </div>
 </form>
   <!-- container-scroller -->
+  <?php include('footer.php');?>
 
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>

@@ -19,7 +19,7 @@ if (strlen($_SESSION['id']==0))
       {
         $password="Lecturer.123";
         $newpass = $password;
-              mysqli_query($conn,"UPDATE lecturer set Le_Pass='$newpass' where Le_ID = '".$_GET['id']."'");
+              mysqli_query($conn,"UPDATE lecturer set Le_Pass=SHA1('$newpass') where Le_ID = '".$_GET['id']."'");
               echo '<script>alert("Password Reset. New Password is Lecturer.123")</script>';
         echo '<script>window.location.href=manage-students.php</script>';
       } 
@@ -135,6 +135,7 @@ if (strlen($_SESSION['id']==0))
       </div>
     </div>
   </div>
+  <?php include('footer.php');?>
 
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>

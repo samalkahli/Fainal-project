@@ -45,7 +45,7 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/add-lecturer">Add Lecturer</a></li>
+                <li class="nav-item"><a class="nav-link" href="add-lecturer">Add Lecturer</a></li>
               </ul>
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="manage-lecturer.php">Manage Lecturer</a></li>
@@ -73,7 +73,7 @@
             </a>
             <div class="collapse" id="ui-basiccc">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/add-exam.php">Add exam</a></li>
+                <li class="nav-item"> <a class="nav-link" href="add-exam.php">Add exam</a></li>
                 <li class="nav-item"> <a class="nav-link" href="manage-exam.php">Manage exam</a></li>
               </ul>
             </div>
@@ -82,3 +82,4 @@
         </ul>
 
       </nav>
+      

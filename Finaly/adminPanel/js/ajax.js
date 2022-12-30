@@ -240,6 +240,29 @@ var y = document.getElementById('other');
     y.style.display = "block";
   }
 }
+function gett()
+{
+var y = document.getElementById('other');
+//alert(y);
+
+ if (y.style.display == "block")
+  {
+    y.style.display = "none";
+  }
+  else
+  {
+    y.style.display = "none";
+  }
+}
+function myFunction()
+{
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
 
 
 

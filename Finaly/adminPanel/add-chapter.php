@@ -214,11 +214,12 @@ if (strlen($_SESSION['id']==0))
           </div>
         </div> 
       </div>
+      
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-
+<?php include('footer.php');?>
   <!-- container-scroller -->
 
   <script>

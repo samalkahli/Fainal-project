@@ -40,7 +40,7 @@ function row(){
       $.get("getSubval.php?data=title&chapterid="+x+"&id="+Cid+"&value="+top, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 
-       alert(top);
+       //alert(top);
        $("#sub").empty(); 
           $('#sub').append(data);
       });
