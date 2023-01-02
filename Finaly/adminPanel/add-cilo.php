@@ -17,6 +17,7 @@ if (strlen($_SESSION['id']==0))
         $alias = '';
         $text='';
         $chapter = '';
+        $C='';
         $errors=array();
         if(empty($_POST['title']))
         {
@@ -26,6 +27,7 @@ if (strlen($_SESSION['id']==0))
         {
             $title = mysqli_real_escape_string($conn, trim($_POST['title']));
         }
+        
         if(empty($_POST['alias']))
         {
             $errors[] = 'select alias';
@@ -50,12 +52,23 @@ if (strlen($_SESSION['id']==0))
         {
             $chapter = mysqli_real_escape_string($conn, trim($_POST['chapter']));
         }
+        if(empty($_POST['subtopic']))
+        {
+            $errors[] = 'select subtopic';
+        }
+        else
+        {
+            $C = mysqli_real_escape_string($conn, trim($_POST['subtopic']));
+        }
         if(empty($errors))
         {
+          $query = " INSERT INTO cilo (C_Title, C_Alias,C_Text,C_Chapter, Ch_ID, Su_ID ) VALUES ('$title', '$alias', '$text','$chapter', '$C', '$Sid')";
+            $r = mysqli_query($conn ,$query);
+            //var_dump($query);
         if($r)
         {
             echo "<script>alert('DONE');</script>";
-            echo "<script type='text/javascript'> document.location = 'manage-subject.php' </script>";
+            echo "<script type='text/javascript'> document.location = document.location</script>";
         }
         
     }   

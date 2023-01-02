@@ -4,13 +4,91 @@ include_once('../includes/conn.php');
 $id=$_SESSION['id'];
 $query=mysqli_query($conn,"SELECT * FROM admin WHERE Ad_ID=".$id);
 $result= mysqli_fetch_array($query);
+use Shuchkin\SimpleXLSX;
 if (strlen($_SESSION['id']==0))
   {
   header('location:../outSession.php');
   }
   else{
-    // $Chid = intval($_GET['Chid']); 
+    // $Chid = intval($_GET['Chid']);
+     
     $Sid = intval($_GET['id']); 
+  if (isset($_POST['add']))
+  {
+
+    $target_dir = "files/chapters/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    //var_dump($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+    // Check if image file is a actual image or fake image
+        $check = filesize($_FILES["fileToUpload"]["tmp_name"]);
+        if($check > 0) {
+            //var_dump($check); 
+            $uploadOk = 1;
+        } else {
+            echo'<script>al alert("File is not an xlsx."); </script>';
+            $uploadOk = 0;
+        }
+        
+    // Check if file already exists
+    if (file_exists($target_file))
+    {
+      echo '<script> alert("Sorry, file already exists."); </script>';
+        $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($_FILES["fileToUpload"]["size"] > 500000) {
+       echo '<script> alert("Sorry, your file is too large.");</script>';
+
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if($imageFileType != "xlsx" ) {
+      echo '<script>alert("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");</script>';
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo '<script>alert("Sorry, your file was not uploaded.");</script>';
+    // if everything is ok, try to upload file
+    }
+    
+    else
+    { 
+      ini_set('error_reporting', E_ALL);
+      ini_set('display_errors', true);
+      require_once __DIR__.'/Read/SimpleXLSX.php';
+      $xlsx = SimpleXLSX::parse($_FILES["fileToUpload"]["tmp_name"]);
+      //var_dump($xlsx);
+      $headers = $xlsx->rows()[10];
+      //var_dump($headers);
+      for($i = 11; $i < count( $xlsx->rows());$i++)
+      {
+          $row = $xlsx->rows()[$i];
+          $query = "INSERT into chapter (Ch_Number, Ch_SupTopic, Ch_Topic, Su_ID) values ('$row[0]','$row[2]','$row[1]','$Sid')";
+          //echo $query."<br>";
+          $res = mysqli_query($conn,$query);
+          //var_dump($res);
+      }
+        //var_dump($_FILES["fileToUpload"]["tmp_name"]);
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
+        { ?>   
+          <script> alert("The file has been uploaded.");</script>
+          <?php   
+        }
+        else
+        {
+            echo '<script>"Sorry, there was an error uploading your file."; </script>';
+        }
+    }
+    
+
+    }
     if (isset($_POST['submit']))
     {
         $topic = '';
@@ -43,14 +121,14 @@ if (strlen($_SESSION['id']==0))
         }
         if(empty($errors))
         {
-            $query = " INSERT INTO chapter (Ch_Number, Ch_Topic, Ch_SupTopic, Su_ID ) VALUES ('$chapter', '$topic', '$sub', '$Sid')";
+            $query = " INSERT INTO chapter (Ch_Number, Ch_SupTopic, Ch_Topic, Su_ID ) VALUES ('$chapter','$sub', '$topic',  '$Sid')";
             $r = mysqli_query($conn ,$query);?>
             <script type='text/javascript'> document.location = "add-chapter.php?id="<?php echo $Sid; ?> </script><?php
             //var_dump($query);
         if($r)
         {
           echo "<script>alert('DONE');</script>";
-          echo "<script type='text/javascript'> document.location = 'manage-subject.php' </script>";
+          echo "<script type='text/javascript'> document.location = document.location </script>";
       }
         
     }   
@@ -123,7 +201,7 @@ if (strlen($_SESSION['id']==0))
                 <div class="card-body">
                   <h4 class="card-title">Information About Subject</h4>
                   <div class="table-responsive">
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                     <?php
                         $query= "SELECT subject.*, program.P_Name, chapter.*
                         FROM subject
@@ -146,10 +224,37 @@ if (strlen($_SESSION['id']==0))
                               <h5><?php echo $row['semster'];?></h5>
                         </div>
                         <div class="field padding-bottom--24">
+                        <label for="name">Import the Chapter from Excel File</label>
+                        <input class="form-control" type="file" accept=".xls,.xlsx" name="fileToUpload" id="fileToUpload">
+                        <span>if you want xlsx sheet<a href="download/chapter/AddChapter.xlsx"> click here!</a></span>
+
+                        </div>
+                        <button class="btn btn-primary" name="add" type="submit">add</button>
+                        <a data-bs-toggle="collapse" href="#div" aria-expanded="false" aria-controls="ui-basic">
+                         <button class="menu-title btn btn-primary ">Add Manually</button>
+                        </a>
+                        <div class="collapse" id="div" style="margin: 20px;">
+                        <h4 class="card-title">Add Chapter</h4>
+                        <div class="field padding-bottom--24">
                         <label>Chapter Number </label>
                         <input type="number" name="chapter" id="chapter" onchange="getData('topic')" placeholder="Select the Chapter Number..." min="1" max="<?php echo $row['Su_Chapter']; ?>">
-                        </div>
-                        <h4 class="card-title">Add Chapter</h4>
+                        <!-- <select onchange="getData('topic')" class="form-control" name="chapter" id="chapter">
+                        <option value="0">Select The Chapter : </option>
+
+                          <?php 
+                          $qu =mysqli_query($conn,"SELECT DISTINCT Ch_Number,Ch_Topic from chapter where Su_ID = '$Sid'");
+                          while ($roww = mysqli_fetch_assoc($qu))
+                          { ?>
+                          <option onclick="gett()" value="<?php echo $roww['Ch_Number']; ?>"><?php echo $roww['Ch_Topic']; ?></option>
+                          <?php } ?>
+                          <option onclick="get()" value="">Add New Topic :</option>
+                        </select> -->
+                      </div>
+                      <div id="other" class="field padding-bottom--24" style="display: none;" >
+                      <label for="">New Topic : </label>
+                        <input type="text"  > 
+                      </div>
+                        
                         <div class="field padding-bottom--24" id="drop">
                         </div>
                         <div class="field padding-bottom--24" >
@@ -158,7 +263,7 @@ if (strlen($_SESSION['id']==0))
                         </div>  
                         
                         <button class="btn btnn btn-primary" type="submit" name="submit" >Continue</button>
-
+                        </div>
                     </form>
                     </div>
                 </div>
@@ -204,7 +309,7 @@ if (strlen($_SESSION['id']==0))
                                  
                               </div>
                              <?php 
-                             } else{echo "You don't have CILOs ";} ?>
+                             } else{echo "You don't have Any Topics Or SubTopics  ";} ?>
                       
                     </form>
                     </div>

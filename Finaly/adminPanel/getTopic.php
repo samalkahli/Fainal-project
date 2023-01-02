@@ -15,8 +15,6 @@ if ($num == 0)
 <?php } 
 else{
 ?>
-
-
     <label>The Topic to Chapter <?php echo $row['Ch_Number']; ?> </label>
     <input type="text" name="topic" value="<?php echo $row['Ch_Topic'];?>" style="border: 0px;" readonly> 
     <?php }?>

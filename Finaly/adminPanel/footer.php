@@ -1,8 +1,8 @@
-<footer class="bg-light text-center text-lg-start">
+<footer class=" text-center text-lg-start" style="background-color: #f4f5f7;">
   <!-- Copyright -->
-  <div class="text-end p-4" style="background-color: rgba(0, 0, 0, 0.2);">
+  <div class="text-end p-4" >
     © 2020 Copyright:
-    <img  src="../images/Logo.png" style="height: 50px; width: auto;">
+    <img  src="../images/Logo.png" style="height: 30px; width: auto;">
   </div>
   <!-- Copyright -->
 </footer>

@@ -196,17 +196,19 @@ if (strlen($_SESSION['id']==0))
                         </a>
                 </h4>
                         <div>
-                          <?php $query=" SELECT * FROM quation where Ex_ID = $E_ID "; 
+                          <?php $query=" SELECT * FROM question where Ex_ID = $E_ID "; 
                           $res = mysqli_query($conn,$query);
-                          // $num = mysqli_num_rows($res);
-                          // if ($num > 0)
-                          // {
 
-                          // }
-                          // else
-                          // {
-                          //   echo "You don't have any Question";
-                          // }
+                          $num = mysqli_num_rows($res);
+                          //var_dump($res);
+                          if ($num > 0)
+                          {
+
+                          }
+                          else
+                          {
+                            echo "You don't have any Question";
+                          }
                           
                           
                           ?>
@@ -218,7 +220,7 @@ if (strlen($_SESSION['id']==0))
                         </div>
                         <div class="field padding-bottom--24">  
                         <label for="name">Chapter's</label>
-                          <input type="number" name="chapter" id="chapter" onchange="getData('cilo')" title="Plase Select The Chapter" value="0" min="1" max="8">
+                          <input type="number" name="chapter" id="chapter" onchange="getData('cilo')" title="Plase Select The Chapter" value="0" min="1" max="<?php echo $row['Su_Chapter']; ?>">
                         </div>
                         <div class="field padding-bottom--24">  
                           <label>Select The CILOs</label>

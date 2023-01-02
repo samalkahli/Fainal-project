@@ -15,6 +15,7 @@ if (strlen($_SESSION['id']==0))
       $type='';
       $time='';
       $subject='';
+      $mark = '';
       $errors=array();
       
       if(empty($_POST['type']))
@@ -24,6 +25,14 @@ if (strlen($_SESSION['id']==0))
       else
       {
           $type = mysqli_real_escape_string($conn, trim($_POST['type']));
+      }
+       if(empty($_POST['mark']))
+      {
+          $errors[] = 'select mark';
+      }
+      else
+      {
+          $mark = mysqli_real_escape_string($conn, trim($_POST['mark']));
       }
       
       if(empty($_POST['time']))
@@ -186,12 +195,24 @@ if (strlen($_SESSION['id']==0))
             <select class="form-control" name="type" required>
 
               <option value="">Select Type</option>
-              <option value="Sem Fainal">Sem Fainal</option>
-              <option value="Test">Test</option>
-              <option value="Fainal">Fainal</option> 
+              <option class="nn" onclick="markk()" value="Sem Fainal">Sem Fainal</option>
+              <option class="nn" onclick="markk()" value="Test">Test</option>
+              <option id="fa" onclick="mark()" value="Fainal">Fainal</option> 
 
             </select>
           </div>
+          <div class="field padding-bottom--24">
+                <label>Mark</label>
+                <select  class="form-control" name="mark" required >
+                <option value="0">select semster :</option>
+                <option class="mm" value="10" style="display: none;">ten Mark</option>
+                <option class="mm" value="20" style="display: none;">twinty</option>
+                <option class="mm" value="30" style="display: none;">therty</option>
+                <option class="mm" value="40" style="display: none;">fourty</option>
+                <option id="ma" value="50" style="display: none;">fivety</option>
+                   </select>
+                  
+            </div>
                 <div class="field padding-bottom--24 form-group">
             <label>Exam Time Limit</label>
             <select class="form-control" name="time" required>
@@ -228,7 +249,33 @@ if (strlen($_SESSION['id']==0))
 
   <!-- plugins:js -->
   <?php include('footer.php');?>
+<script>
+  var x = document.getElementById('ma');
+  var z = document.getElementsByClassName('mm');
+  
+  function mark()
+  {
+     
+    if (x.style.display == 'none')
+    {
+      x.style.display = 'block';
+    }
+    else x.style.display = 'none';
+    
+  }
+  function markk()
+  {
+    
+    if (z.style.display == 'none')
+    {
+      z.style.display = 'block';
+      x.style.display = 'none';
+    }
+    else z.style.display = 'block';
 
+    
+  }
+</script>
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
