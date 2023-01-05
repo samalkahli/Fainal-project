@@ -90,6 +90,7 @@ if (strlen($_SESSION['id']==0))
                       <th>The Lecturer</th>
                       <th>The Subject</th>
                       <th>Type Of Exam</th>
+                      <th>Mark Of Exam</th>
                       <th>Limit Time</th>
                       <th>Date Of Created</th>
                       
@@ -110,6 +111,7 @@ if (strlen($_SESSION['id']==0))
                       <td><?php echo $row['Le_Name'];?></td>
                       <td><?php echo $row['Su_Name'];?></td>
                       <td><?php echo $row['Ex_Type'];?></td>
+                      <td><?php echo $row['Ex_Mark']." Marks";?></td>
                       <td><?php echo $row['Ex_Duration']." Minutes"; ?></td>
                       <td><?php echo $row['Ex_Date']; ?></td>
                       

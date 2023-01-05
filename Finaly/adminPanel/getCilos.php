@@ -12,7 +12,7 @@ if ($num > 0)
 while ($row = mysqli_fetch_assoc($result))
 {
 ?>
-<option id="text"><?php echo $row['C_Alias'].$i; $i++?></option> 
+<option value="<?php echo $row['C_ID'];?>" id="text"><?php echo $row['C_Alias'].$i; $i++?></option> 
 
 <?php }?>
 <h5 class="div">

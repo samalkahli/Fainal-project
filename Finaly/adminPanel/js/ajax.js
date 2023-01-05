@@ -225,10 +225,46 @@ function getData(data)
     else
     return false;
   }
-
-
-  
 }
+function getInfo()
+      {
+        var que = document.getElementById('que').value;
+        var info = document.getElementById('info').value;
+        $('#info').empty();
+        if (que > 0)
+        {
+          $.get("getInfo.php?data=que&que="+que, function(data, status)
+          {
+            //alert("Data: " + fact + "\nStatus: " + status); 
+              $("#info").empty(); 
+              $('#info').append(data);
+          });
+          
+        }
+        else
+        return false;
+        
+      }
+function getType()
+  {
+    //alert('dones');
+    var type = document.getElementById('type').value;
+    var dropT = document.getElementById('dropT').value;
+    //alert(type);
+    $('#dropT').empty();
+    if (type != '')
+    {
+      $.get("getType.php?data=type&type="+type, function(data, status)
+      {
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#dropT").empty(); 
+          $('#dropT').append(data);
+      });
+    }
+    else
+    return false;
+    
+  }
 function get()
 {
 var y = document.getElementById('other');
@@ -263,6 +299,36 @@ function myFunction()
     x.type = "password";
   }
 }
+    
+  function mark()
+  {
+     
+      alert('do');
+      var x = document.getElementById('mark');
+      var y = document.getElementById('type');
+      //$('#mark').empty;
+      alert(y);
+    
+  }
+  //   if (x.style.display == 'none')
+  //   {
+  //     x.style.display = 'block';
+  //     z.style.display = 'none';
+  //   }
+  //   else x.style.display = 'none';
+    
+  // }
+  // function marknofa()
+  // {
+    
+  //   if (z.style.display == 'none')
+  //   {
+  //     z.style.display = 'block';
+  //     x.style.display = 'none';
+  //   }
+  //   else z.style.display = 'block';
 
+    
+  // }
 
 

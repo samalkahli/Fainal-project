@@ -217,7 +217,7 @@ if (strlen($_SESSION['id']==0))
                       </div>
                       <div id="other" class="field padding-bottom--24" style="display: none;" >
                       <label for="">Other : </label>
-                        <input type="text" > 
+                        <input name="degree" type="text" > 
                       </div>
                     
                       <div class="field padding-bottom--24">
