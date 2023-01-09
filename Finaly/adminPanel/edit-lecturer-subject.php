@@ -9,11 +9,22 @@ if (strlen($_SESSION['id']==0))
   header('location:../outSession.php');
   }
   else{ 
-        if(isset($_GET['del']))
+        $Suid = $_GET['id'];
+        if(isset($_POST['submit']))
         {
-        mysqli_query($conn,"delete from exam where Ex_ID =".$_GET['id']);
-        echo '<script>alert("Lecturer Record Deleted Successfully !!")</script>';
-        echo '<script>window.location.href=manage-lecturer.php</script>';
+             $le = $_POST['lecturer'];
+             $query = "UPDATE sub_lec set
+             Su_ID ='$Suid',
+             Le_ID ='$le'
+             where
+             Su_ID ='$Suid'";
+             $result = mysqli_query($conn,$query);
+             //var_dump($query,$le);
+
+        //mysqli_query($conn,"INSERT into sub_lec (Le_ID, Su_ID) VALUES ('$le', '$su')");
+        echo '<script>alert("Lecturer Record  Successfully !!")</script>';
+        echo "<script type='text/javascript'> document.location = 'select-lecturer.php'; </script>";
+
               }?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,66 +75,74 @@ if (strlen($_SESSION['id']==0))
           <div class="row">
             <div class="col-sm-12">
               <!-- here the code-->
+              <form method="POST">
               <div class="card">
                 <div class="card-body">
                 <h4 class="card-title">Subject Table</h4>
                   <div class="table-responsive">
                   <?php
-                    $query= "SELECT exam.*, subject.*, program.*, department.*, lecturer.*, sub_lec.*
-                    FROM exam
-                    LEFT JOIN subject on exam.Su_ID = subject.Su_ID
-                    LEFT JOIN program on subject.P_ID = program.P_ID
-                    LEFT JOIN department on program.D_ID = department.D_ID
-                    LEFT JOIN sub_lec on sub_lec.Su_ID = subject.Su_ID
-                    LEFT JOIN lecturer on sub_lec.Le_ID = lecturer.Le_ID ";
-
+                  
+                    $query= "SELECT subject.*, program.P_Name, department.* ,sub_lec.* , lecturer.*
+                              FROM subject
+                              right JOIN sub_lec ON sub_lec.Su_ID = subject.Su_ID
+                              right JOIN lecturer ON sub_lec.Le_ID = lecturer.Le_ID 
+                              LEFT JOIN program ON subject.P_ID = program.P_ID
+                              LEFT JOIN department ON program.D_ID = department.D_ID
+                              where subject.Su_ID = '$Suid';
+                               ";
                       $result = mysqli_query($conn,$query);
+
+
+                    //   $queryle = " SELECT subject.* ,sub_lec.* ,lecturer.*
+                    //   from sub_lec 
+                    //    LEFT JOIN subject ON sub_lec.Su_ID = subject.Su_ID
+                    //    LEFT JOIN lecturer ON sub_lec.Le_ID = lecturer.Le_ID 
+                    //    where Su_ID = 
+                    //   ";
+                    //   $resultle = mysqli_query($conn,$queryle);
                       if(mysqli_num_rows($result) > 0)
                       {
                         ?>
                 <table class="table">
                   <thead>
                     <tr>
-                    <th>No.</th>
+                      <th>No.</th>
                       <th>The Department</th>
                       <th>The Program</th>
-                      <th>The Semster</th>
-                      <th>The Lecturer</th>
-                      <th>The Subject</th>
-                      <th>Type Of Exam</th>
-                      <th>Mark Of Exam</th>
-                      <th>Limit Time</th>
-                      <th>Date Of Created</th>
-                      
-                      
+                      <th>Name</th>
+                      <th>Semster</th>
+                      <th>Chapter</th>
+                      <th>The lecturer</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php
                   $i=1;
+                //   $rowle = mysqli_fetch_assoc($resultle);
                    while($row = mysqli_fetch_assoc($result))
-                {?>
+                { 
+                 // var_dump($row);?>
                     <tr>
-                      <td><?php echo $i; $i++; ?></td>
-                      <td><?php echo $row['D_Name'];?></td>
-                      <td><?php echo $row['P_Name'];?></td>
-                      <td><?php echo $row['semster'];?></td>
-                      <td><?php echo $row['Le_Name'];?></td>
-                      <td><?php echo $row['Su_Name'];?></td>
-                      <td><?php echo $row['Ex_Type'];?></td>
-                      <td><?php echo $row['Ex_Mark']." Marks";?></td>
-                      <td><?php echo $row['Ex_Duration']." Minutes"; ?></td>
-                      <td><?php echo $row['Ex_Date']; ?></td>
-                      
-                      
+                      <td><?php echo $row['Su_ID']; ?></td>
+                      <td><?php echo $row['D_Name']; ?></td>
+                      <td><?php echo $row['P_Name']; ?></td>
+                      <td><?php echo $row['Su_Name']; ?></td>
+                      <td><?php echo $row['semster']; ?></td>
+                      <td><?php echo $row['Su_Chapter'];?></td>
+                      <td><select class="form-control" name="lecturer" id="">
+                        <?php
+                      $queryLe = mysqli_query($conn,"SELECT * from lecturer ");
+                      var_dump($queryLe);
+                         while ($rowLe = mysqli_fetch_assoc($queryLe))
+                        { 
+                            //var_dump($rowLe);?>
+                            <option value="<?php echo $rowLe['Le_ID']; ?>"><?php echo $rowLe['Le_Name']; ?></option>
+                  <?php } ?>
+                      </select>
+                    </td>  
                       <td>
-                      <a href="edit-exam.php?d_id=<?php echo $row['D_ID']; ?>&id=<?php echo $row['Su_ID'];?>&e_id=<?php echo $row['Ex_ID'];?>">
-                      <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>
-                                                              
-                      <a href="manage-exam.php?id=<?php echo $row['Ex_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
-                      <button class="btn btn-danger">Delete</button>
-                      </a>
+                        <input class="btn btn-outline-primary btn-sm" type="submit" name="submit" value="UPDATE">
                       </td>
 
                     </tr>
@@ -137,7 +156,7 @@ if (strlen($_SESSION['id']==0))
                   </div>
                 </div>
               </div>
-              
+              </form>
             </div>
             </div>
           </div>

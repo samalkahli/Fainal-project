@@ -67,14 +67,18 @@ if (strlen($_SESSION['id']==0))
       //var_dump($xlsx);
       $headers = $xlsx->rows()[10];
       //var_dump($headers);
-      for($i = 11; $i < count( $xlsx->rows());$i++)
+      $sheet = $xlsx->sheetsCount();
+      for ($k = 0 ; $k < $sheet; $k++)
+    {
+      for($i = 11; $i < count( $xlsx->rows($k));$i++)
       {
-          $row = $xlsx->rows()[$i];
+          $row = $xlsx->rows($k)[$i];
           $query = "INSERT into chapter (Ch_Number, Ch_SupTopic, Ch_Topic, Su_ID) values ('$row[0]','$row[2]','$row[1]','$Sid')";
           //echo $query."<br>";
           $res = mysqli_query($conn,$query);
           //var_dump($res);
       }
+    }
         //var_dump($_FILES["fileToUpload"]["tmp_name"]);
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
         { ?>   

@@ -4,6 +4,7 @@ include_once('../includes/conn.php');
 $id=$_SESSION['id'];
 $query=mysqli_query($conn,"SELECT * FROM admin WHERE Ad_ID=".$id);
 $result= mysqli_fetch_array($query);
+use Shuchkin\SimpleXLSX;
 if (strlen($_SESSION['id']==0))
   {
   header('location:../outSession.php');
@@ -21,12 +22,90 @@ if (strlen($_SESSION['id']==0))
     
     <body>
     <?php
+    if (isset($_POST['add']))
+    {
+  
+      $target_dir = "files/subjects/";
+      $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+      //var_dump($_FILES["fileToUpload"]["name"]);
+      $uploadOk = 1;
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+  
+      // Check if image file is a actual image or fake image
+          $check = filesize($_FILES["fileToUpload"]["tmp_name"]);
+          if($check > 0) {
+              //var_dump($check); 
+              $uploadOk = 1;
+          } else {
+              echo'<script>al alert("File is not an xlsx."); </script>';
+              $uploadOk = 0;
+          }
+          
+      // Check if file already exists
+      if (file_exists($target_file))
+      {
+        echo '<script> alert("Sorry, file already exists."); </script>';
+          $uploadOk = 0;
+      }
+  
+      // Check file size
+      if ($_FILES["fileToUpload"]["size"] > 500000) {
+         echo '<script> alert("Sorry, your file is too large.");</script>';
+  
+          $uploadOk = 0;
+      }
+  
+      // Allow certain file formats
+      if($imageFileType != "xlsx" ) {
+        echo '<script>alert("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");</script>';
+          $uploadOk = 0;
+      }
+  
+      // Check if $uploadOk is set to 0 by an error
+      if ($uploadOk == 0) {
+          echo '<script>alert("Sorry, your file was not uploaded.");</script>';
+      // if everything is ok, try to upload file
+      }
+      
+      else
+      { 
+        ini_set('error_reporting', E_ALL);
+        ini_set('display_errors', true);
+        require_once __DIR__.'/Read/SimpleXLSX.php';
+        $xlsx = SimpleXLSX::parse($_FILES["fileToUpload"]["tmp_name"]);
+        //var_dump($xlsx);
+        $headers = $xlsx->rows()[10];
+        $program = mysqli_real_escape_string($conn, trim($_POST['program']));
+        
+        //var_dump($headers);
+        for($i = 11; $i < count( $xlsx->rows());$i++)
+        {
+            $row = $xlsx->rows()[$i];
+            $query = "INSERT into subject (Su_Name, semster,Su_Chapter, P_ID) VALUES ('$row[0]','$row[1]','$row[2]','$program')";
+            //echo $query."<br>";
+            $res = mysqli_query($conn,$query);
+            //var_dump($res);
+        }
+          //var_dump($_FILES["fileToUpload"]["tmp_name"]);
+          if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
+          { ?>   
+            <script> alert("The file has been uploaded.");</script>
+            <?php   
+          }
+          else
+          {
+              echo '<script>"Sorry, there was an error uploading your file."; </script>';
+          }
+      }
+      
+  
+      }
   if(isset($_POST['submit']))
   {
     include_once('../includes/conn.php');
     $name='';
     $semster='';
-    $lecturer='';
+    // $lecturer='';
     $number = '';
     $program='';
     $errors=array();
@@ -48,14 +127,14 @@ if (strlen($_SESSION['id']==0))
     {
         $semster = mysqli_real_escape_string($conn, trim($_POST['semster']));
     }
-    if(empty($_POST['lecturer']))
-    {
-        $errors[] = 'select lecturer';
-    }
-    else
-    {
-        $lecturer = mysqli_real_escape_string($conn, trim($_POST['lecturer']));
-    }
+    // if(empty($_POST['lecturer']))
+    // {
+    //     $errors[] = 'select lecturer';
+    // }
+    // else
+    // {
+    //     $lecturer = mysqli_real_escape_string($conn, trim($_POST['lecturer']));
+    // }
     
     if(empty($_POST['program']))
     {
@@ -76,7 +155,7 @@ if (strlen($_SESSION['id']==0))
     
     if(empty($errors))
     {
-        $query = "INSERT INTO subject (Su_Name, semster,Su_Chapter, Le_ID, P_ID) VALUES ('$name','$semster','$number','$lecturer','$program')";
+        $query = "INSERT INTO subject (Su_Name, semster,Su_Chapter, P_ID) VALUES ('$name','$semster','$number','$program')";
         $r = @mysqli_query($conn ,$query);
   
         if($r)
@@ -155,7 +234,7 @@ if (strlen($_SESSION['id']==0))
                 <div class="card-body">
                   <h4 class="card-title">Information About Subject</h4>
                   <div class="table-responsive">
-                  <form id="stripe-login" method="post">
+                  <form  method="post" enctype="multipart/form-data">
               <div class="field padding-bottom--24">
                   <label>Faculty</label>
                   
@@ -180,23 +259,16 @@ if (strlen($_SESSION['id']==0))
                 </div>
                 <div class="field padding-bottom--24">
                   <label for="program">Program</label>
-                  <select  class="form-control" name="program" id="program" >
-                   
+                  <select  class="form-control" name="program" id="program" onchange="getSubject()">
 
                   </select>
                 </div>
-                <!-- <div class="field padding-bottom--24">
-                        <label for="name">Import the Subject From Excel File</label>
-                        <input class="form-control" type="file" accept=".xls,.xlsx" name="fileToUpload" id="fileToUpload">
-                        <span>if you want xlsx sheet<a href="download/chapter/AddChapter.xlsx"> CLICK HERE!</a></span>
+                <div id="dropS">
 
-                        </div>
-                <button class="btn btn-primary" name="add" type="submit">add</button>
-                        <a data-bs-toggle="collapse" href="#div" aria-expanded="false" aria-controls="ui-basic">
-                         <button class="menu-title btn btn-primary ">Add Manually</button>
-                        </a> -->
+                </div>
+                 
                         
-                <!-- <div class="collapse" id="div" style="margin: 20px;"> -->
+                <div class="collapse" id="div" style="margin: 20px;">
                 <div class="field padding-bottom--24">
                 <label>Semster</label>
             <select class="form-control" name="semster">
@@ -211,19 +283,19 @@ if (strlen($_SESSION['id']==0))
             </select>
                 </div>
             
-            <div class="field padding-bottom--24">
+            <!-- <div class="field padding-bottom--24">
             <label>Lecturer</label>
             <select class="form-control" name="lecturer">
             <option value="0">Select Lecturer</option>
               <?php 
-              include_once('../../includes/conn.php');
-                $selCourse = mysqli_query($conn,"SELECT * FROM lecturer ORDER BY Le_ID asc");
-                while ($selCourseRow = mysqli_fetch_assoc($selCourse)){ ?>
+              // include_once('../../includes/conn.php');
+              //   $selCourse = mysqli_query($conn,"SELECT * FROM lecturer ORDER BY Le_ID asc");
+              //   while ($selCourseRow = mysqli_fetch_assoc($selCourse)){ ?>
                   <option value="<?php echo $selCourseRow['Le_ID']; ?>"><?php echo $selCourseRow['Le_Name']; ?></option>
-                <?php }
+                <?php # }
                ?>
             </select>
-                </div>
+                </div> -->
                 <div class="field padding-bottom--24">
                   <label for="name">Number Of Chapter</label>
                   <input type="number" name="number" max="7" min="1" value="1" placeholder="Chapter ..">
@@ -265,7 +337,6 @@ if (strlen($_SESSION['id']==0))
 
   <!-- container-scroller -->
   <?php include('footer.php');?>
-
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->

@@ -86,7 +86,7 @@ if (strlen($_SESSION['id']==0))
         if($r)
         {
             echo "<script>
-            alert('DONE');
+            alert('The Lecturer added Successfully');
             </script>"
             ;
             echo "<script type='text/javascript'> document.location = 'manage-lecturer.php' </script>";
@@ -203,21 +203,16 @@ if (strlen($_SESSION['id']==0))
                       </div>
                       <div class=" field-checkbox padding-bottom--24">
                       <label>Degree : </label><br style="margin: 20px;">
-                    <select class="form-control" name="degree" id="degree">
+                    <select class="form-control" name="degree" id="degree" onchange="get()">
                       <option value="0">select the degree :</option>
-                      <option value="Prof." onclick="gett()">Prof</option>
-                      <option value="Doctor" onclick="gett()">Doctor</option>
-                      <option value="Master" onclick="gett()">Master</option>
-                      <option value="" onclick="get()"> Other </option>
-                    </select>
-                      <!-- <input class="redio" type="radio" name="degree" value="Prof." onclick="gett()">Prof. <br style="margin: 20px;">
-                      <input class="redio" type="radio" name="degree" value="Doctor" onclick="gett()">Doctor <br style="margin: 20px;">
-                      <input class="redio" type="radio" name="degree" value="Master" onclick="gett()">Master <br style="margin: 20px;">
-                      <input class="redio" type="radio" name="degree" value="" onclick="get()">Other  -->
+                      <option value="Prof." >Prof.</option>
+                      <option value="Doctor">Doctor</option>
+                      <option value="Master" >Master</option>
+                      <option value="1" > Other </option>
+                    </select>  
                       </div>
-                      <div id="other" class="field padding-bottom--24" style="display: none;" >
-                      <label for="">Other : </label>
-                        <input name="degree" type="text" > 
+                      <div id="other" class="field padding-bottom--24" >
+                       
                       </div>
                     
                       <div class="field padding-bottom--24">

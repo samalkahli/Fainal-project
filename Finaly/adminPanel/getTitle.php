@@ -1,14 +1,3 @@
-<script>
-$(document).ready(function(){
-  $(".h6").mouseenter(function(){
-    $(".div").show();
-
-  });
-  $(".h6").mouseleave(function(){
-    $(".div").hide();
-  });
-});
-</script>
 <?php 
 include_once('../includes/conn.php');
 $Sid = $_GET['id'];
@@ -25,11 +14,12 @@ while ($row = mysqli_fetch_assoc($result))
 <label>The Title</label>
 <h4><?php echo $row['C_Title'];?></h4>
 <div class="field padding-bottom--24">
-    <div class="h6" style="cursor: pointer;">
+    <div class="h6" >
+      
         <h6 class="h6" ><?php echo $row['C_Alias'].$i; $i++;?></h6>
     </div>
-    <h5 class="div" style="display: none;" >
-    <span class="div"><?php echo $row['C_Text']; ?></span>
+    <h5>
+    <span><?php echo $row['C_Text']; ?></span>
     </h5>
 </div> 
 

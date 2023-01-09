@@ -265,9 +265,42 @@ function getType()
     return false;
     
   }
+    
+  function getSubject()
+  {
+    var pro = document.getElementById('program').value ;
+    var drop = document.getElementById('dropS').value ;
+    $('#dropS').empty();
+    
+    if (pro > 0 )
+    {
+      $.get("getSubFile.php?data=pro&pro="+pro, function(data, status)
+      {
+        // alert(pro);
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#dropS").empty(); 
+          $('#dropS').append(data);
+      });
+    }
+    else 
+    return false;
+
+  }
+  
 function get()
 {
-var y = document.getElementById('other');
+var y = document.getElementById('other').value;
+var x = document.getElementById('degree').value;
+$('#other').empty();
+if (x == 1)
+{
+  $.get("getOther.php?data=x&x="+x, function(data, status)
+      {
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#other").empty(); 
+          $('#other').append(data);
+      });
+}
 //alert(y);
 
  if (y.style.display === "block") {
@@ -276,20 +309,20 @@ var y = document.getElementById('other');
     y.style.display = "block";
   }
 }
-function gett()
-{
-var y = document.getElementById('other');
-//alert(y);
+// function gett()
+// {
+// var y = document.getElementById('other');
+// //alert(y);
 
- if (y.style.display == "block")
-  {
-    y.style.display = "none";
-  }
-  else
-  {
-    y.style.display = "none";
-  }
-}
+//  if (y.style.display == "block")
+//   {
+//     y.style.display = "none";
+//   }
+//   else
+//   {
+//     y.style.display = "none";
+//   }
+// }
 function myFunction()
 {
   var x = document.getElementById("myInput");

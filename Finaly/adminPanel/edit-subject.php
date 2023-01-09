@@ -24,7 +24,7 @@ if (strlen($_SESSION['id']==0))
                         Su_Name ='$name',
                         semster ='$semster',
                         Su_Chapter='$chapter',
-                        Le_ID ='$lecturer',
+                       # Le_ID ='$lecturer',
                         P_ID= '$prog'
                         where
                         Su_ID ='$leid'";
@@ -98,10 +98,10 @@ if (strlen($_SESSION['id']==0))
                   <form method="post">
       
                   <?php
-                    $query= "SELECT subject.*, program.P_Name, lecturer.Le_Name
+                    $query= "SELECT subject.*, program.P_Name
                     FROM subject 
                       LEFT JOIN program ON subject.P_ID = program.P_ID 
-                      LEFT JOIN lecturer on subject.Le_ID = lecturer.Le_ID 
+                      #LEFT JOIN lecturer on subject.Le_ID = lecturer.Le_ID 
                       where Su_ID = '$leid'";
 
                       $result = mysqli_query($conn,$query);
@@ -114,7 +114,7 @@ if (strlen($_SESSION['id']==0))
                       <th>Name</th>
                       <th>Semster</th>
                       <th>Chapter</th>
-                      <th>The lecturer</th>
+                      <!-- <th>The lecturer</th> -->
                       
                     </tr>
                   </thead>
@@ -151,7 +151,7 @@ if (strlen($_SESSION['id']==0))
                       <td>
                         <input class="form-control" type="number" name="chapter" value="<?php echo $row['Su_Chapter']; ?>" max="7" min="1" >
                       </td>
-                      <td>
+                      <!-- <td>
                         <select class="form-select" name="lecturer">
 
                           <?php $queryLe = " SELECT * FROM lecturer ";
@@ -160,7 +160,7 @@ if (strlen($_SESSION['id']==0))
                                 ?>
                         <option value="<?php echo $rowLe['Le_ID'];?>"><?php echo $rowLe['Le_Name'];?></option>
                                 <?php } ?>
-                      </td>
+                      </td> -->
                     
                     
                     </tr>

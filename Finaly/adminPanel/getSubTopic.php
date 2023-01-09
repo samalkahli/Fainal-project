@@ -13,10 +13,10 @@ if ($num > 0)
     <label><b>Name The Topic is : </b></label><br>
     <label><?php echo $row['Ch_Topic'];?></label><br>
     <label> <b> Name The SubTopics is : </b></label><br>
-    <label><?php $q = mysqli_query($conn,"SELECT Ch_SupTopic from chapter where Ch_Number = '$chapter 'and Su_ID = '$id'");
+    <?php $q = mysqli_query($conn,"SELECT Ch_SupTopic from chapter where Ch_Number = '$chapter 'and Su_ID = '$id'");
     //var_dump($q);
-    while ($r = mysqli_fetch_assoc($q)) { 
-     echo $i.' - '.$r['Ch_SupTopic']; $i++;?></label><br><br>
+    while ($r = mysqli_fetch_assoc($q)) { ?>
+    <label><?php echo $i.' - '.$r['Ch_SupTopic']; $i++;?></label><br>
     <?php }?>
     </div>
 <?php } 

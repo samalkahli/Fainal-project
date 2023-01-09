@@ -8,8 +8,8 @@ if ($type == "True Or False")
     </div>
     <div class=" padding-bottom--24">
         <label for="name">The Answer :</label> <br>
-        <input type="radio" value="True" name="answer">True <br>
-        <input type="radio" value="False" name="answer">False 
+        True <input class="form-check" type="radio" value="True" name="answer"> 
+        False <input class="form-check" type="radio" value="False" name="answer">
     </div>
 <?php }
 if ($type == 'Choices')

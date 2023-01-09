@@ -4,6 +4,16 @@ $que = $_GET['que'];
 $query = "SELECT * from question where Qu_ID = '$que'";
 $res = mysqli_query($conn,$query);
 $row = mysqli_fetch_assoc($res);
+if (isset($_POST['submit']))
+ {
+
+    //mysqli_query($conn, "delete from question where Qu_ID = $que");
+    echo '<script>alert("Lecturer Record Deleted Successfully !!")</script>';
+    //echo '<script>window.location.href=manage-lecturer.php</script>';
+  } 
+  else {
+
+  
 if ($row['Qu_Type'] == "True Or False")
 { ?>
     <div class="field padding-bottom--24">
@@ -70,4 +80,6 @@ if ($row['Qu_Type'] == 'Direct')
         <label for="name"> Answer Of Question </label><br>
         <label for="name"><?php echo $row['Qu_Answer'];?> </label>
     </div>
-<?php }?>
+<?php } }?>
+        <input name="submit" type="submit" class="btn btn-danger" value="Delete">
+        

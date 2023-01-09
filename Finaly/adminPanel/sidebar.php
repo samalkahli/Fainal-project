@@ -62,6 +62,8 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="add-subject">Add Subject</a></li>
                 <li class="nav-item"><a class="nav-link" href="manage-subject.php">manage Subject</a></li>
+                <li class="nav-item"><a class="nav-link" href="select-lecturer.php">Manage Subject's Lecturer </a></li>
+
               </ul>
           </li>
           <li class="nav-item nav-category">Program</li>
