@@ -67,18 +67,29 @@ if (strlen($_SESSION['id'] == 0)) {
       //var_dump($headers);
       $sheet = $xlsx->sheetsCount();
       for ($k = 0; $k < $sheet; $k++) 
-      {
-        for ($i = 11; $i < count($xlsx->rows($k)); $i++) 
         {
-          $row = $xlsx->rows($k)[$i];
-          $query = "INSERT into question
-                    (Qu_Text, Qu_Mark, Qu_Type, Qu_Answer, Ex_ID)
-                     values
-                    ('$row[0]','$row[1]','$row[2]','$row[3]','$E_ID')";
-          $res = mysqli_query($conn,$query);
-          //var_dump($query);
+            for ($i = 11; $i < count($xlsx->rows($k)); $i++) 
+            {
+                $she = $xlsx->sheetNames()[$k];
+                if ($she == 'Choices') 
+                {
+                    $row = $xlsx->rows($k)[$i];
+                    $query = "INSERT into question
+                            (Qu_Text, Qu_Mark, Qu_Type, Qu_A, Qu_B, Qu_C, Qu_D, Qu_Answer, Ex_ID) values
+                            ('$row[0]','$row[1]','$she','$row[2]','$row[3]','$row[4]','$row[5]','$row[6]', $E_ID)";
+                    $res = mysqli_query($conn, $query);
+                    //var_dump($query);
+                } 
+                else 
+                {
+                    $row = $xlsx->rows($k)[$i];
+                    $query = "INSERT into question
+                              (Qu_Text, Qu_Mark, Qu_Type, Qu_Answer, Ex_ID) values ('$row[0]','$row[1]','$she','$row[2]', $E_ID)";
+                    $res = mysqli_query($conn, $query);
+                    //var_dump($query);
+                }
+            }
         }
-      }
       //var_dump($_FILES["fileToUpload"]["tmp_name"]);
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) { ?>
         <script>
