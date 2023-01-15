@@ -68,25 +68,17 @@ if (strlen($_SESSION['id'] == 0)) {
                     <div class="table-responsive">
                       <?php
 
-                      $query = "SELECT subject.*, program.P_Name, department.* #, sub_lec.* , lecturer.*
-                              FROM subject
-                             # LEFT JOIN sub_lec on subject.Su_ID = sub_lec.Su_ID
-                              LEFT JOIN program ON subject.P_ID = program.P_ID
-                              LEFT JOIN department ON program.D_ID = department.D_ID
-                             # LEFT JOIN lecturer ON lecturer.Le_ID = sub_lec.Le_ID
-                               ";
-                               
-                      // $queryle = "SELECT sub_lec.*, lecturer.*, subject.*
-                      //          from sub_lec 
-                      //          inner join lecturer on lecturer.Le_ID = sub_lec.Le_ID
-                      //          inner join subject on subject.Su_ID = sub_lec.Su_ID 
-                               
-                      //          ";
-                      // $resLe = mysqli_query($conn, $queryle);
-                      // // $rowCh = mysqli_fetch_assoc($queryCh);
-                      // $rowle = mysqli_fetch_assoc($resLe);
-                      //var_dump($queryle);
+                      $query = "SELECT distinct  subject.*,  cilo.*,  chapter.* ,chp_cilo.*
+                              FROM chapter
+                              #left JOIN question ON chapter.Ch_ID = question.Ch_ID
+                            left JOIN chp_cilo ON chapter.Ch_ID = chp_cilo.Ch_ID
+                            left JOIN subject on chapter.Su_ID = subject.Su_ID
+                            left JOIN cilo ON cilo.C_ID = chp_cilo.C_ID
+                            where chp_cilo.Ch_ID = chapter.Ch_ID
+                              ";
                       $result = mysqli_query($conn, $query);
+                      //$row = mysqli_fetch_assoc($result);
+                      //var_dump($row);
                       if (mysqli_num_rows($result) > 0) {
                       ?>
                         <table class="table">
@@ -94,17 +86,7 @@ if (strlen($_SESSION['id'] == 0)) {
                             <tr>
                               <th>No.</th>
                               <th>The Department</th>
-                              <th>
-                                <select class="form-control" onchange="getProgram()" style="display: ruby; width: 130px;" name="" id="program">
-                                <option value="">All Program</option>
-                                <?php $qP =mysqli_query($conn, "SELECT * from program ");
-                                      while ($rP = mysqli_fetch_assoc($qP))
-                                      {?>
-                                        <option value="<?php echo $rP['P_ID']; ?>"><?php echo $rP['P_Name']; ?></option>
-                                     <?php }
-
-                                ?>
-                              </select></th>
+                              <th>All Program</th>
                               <th>Name</th>
                               <th>Semster</th>
                               <th>Chapter</th>
@@ -120,36 +102,37 @@ if (strlen($_SESSION['id'] == 0)) {
                           <tbody id="table">
                             <?php
                             $i = 1;
-                            while ($row = mysqli_fetch_assoc($result)) {
+                            while ($row = mysqli_fetch_assoc($result)) 
+                            {
                               //var_dump($row);
                             ?>
                               <tr>
                                 <td><?php echo $i; $i++ ?></td>
-                                <td><?php echo $row['D_Name']; ?></td>
-                                <td><?php echo $row['P_Name']; ?></td>
                                 <td><?php echo $row['Su_Name']; ?></td>
-                                <td><?php echo $row['semster']; ?></td>
-                                <td><?php echo $row['Su_Chapter']; ?></td>
+                                <td><?php echo $row['Ch_Topic']; ?></td>
+                                <td><?php echo $row['C_Alias']; ?></td>
+                                <td><?php #echo $row['Qu_Text']; ?></td>
+                                <td><?php #echo $row['Qu_Answer']; ?></td>
                                 <!-- <td><?php #echo $row['Le_Name']; ?></td> -->
-                                <td>
-                                  <a href="edit-subject.php?id=<?php echo $row['Su_ID']; ?>&Did=<?php echo $row['D_ID']; ?>">
+                                <!-- <td>
+                                  <a href="edit-subject.php?id=<?php #echo $row['Su_ID']; ?>&Did=<?php #echo $row['D_ID']; ?>">
                                     <button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> </a>
 
-                                    <a href="add-lecturer-subject.php?id=<?php echo $row['Su_ID']; ?>">
+                                    <a href="add-lecturer-subject.php?id=<?php #echo $row['Su_ID']; ?>">
                                     <button class="btn btn-outline-dark"><i class="fa fa-edit "></i> Lecturer</button> </a>
 
-                                    <a href="add-cilo.php?id=<?php echo $row['Su_ID']; ?>">
+                                    <a href="add-cilo.php?id=<?php #echo $row['Su_ID']; ?>">
                                     <button class="btn btn-outline-dark btn-"><i class="fa fa-edit "></i>CILOs</button> </a>
 
 
-                                  <a href="add-chapter.php?id=<?php echo $row['Su_ID']; ?>">
+                                  <a href="add-chapter.php?id=<?php #echo $row['Su_ID']; ?>">
                                     <button class="btn btn-outline-success"><i class="fa fa-edit "></i> Chapter</button> </a>
 
                                   
-                                  <a href="manage-subject.php?id=<?php echo $row['Su_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
+                                  <a href="manage-subject.php?id=<?php #echo $row['Su_ID']; ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')">
                                     <button class="btn btn-danger">Delete</button>
                                   </a>
-                                </td>
+                                </td> -->
 
                               </tr>
                           <?php

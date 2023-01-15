@@ -1,6 +1,6 @@
 <nav class="navbar default-layout col-lg-12 col-12 p-0 d-flex align-items-top flex-row pt-5 mt-3">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        <div class="me-3">
+        <div class="me-0">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
             <span class="icon-menu"></span>
           </button>
@@ -14,8 +14,7 @@
           </a>
         </div>
       </div>
-      <div class="navbar-menu-wrapper d-flex align-items-top" style="  padding-left: 466px; text-transform: uppercase;
-"> 
+      <div class="navbar-menu-wrapper d-flex align-items-top" style="  padding-left: 466px; text-transform: uppercase;"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0 ">
             <h1 class="welcome-text">welcome, <span class="text-black fw-bold nav-category"><?php echo $result['Ad_Name'];?></span></h1>

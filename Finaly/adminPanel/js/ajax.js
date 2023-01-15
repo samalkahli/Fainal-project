@@ -82,19 +82,20 @@ function getData(data)
   {
     // console.log(window.location);
 
-    var title = document.getElementById('chapter').value;
+    var cilos = document.getElementById('cilos').value;
     var drop = document.getElementById('drop').value;
     var id = window.location.search;
     const urlPar = new URLSearchParams(id);
     const Cid = urlPar.get('id');
-    $("#title").empty();
+    $("#drop").empty();
     
-   if (title > 0 )
+   if (cilos != 0 )
     {
-      // alert(title);
+       
       // alert(Cid);
-      $.get("getTitle.php?data=title&id="+Cid+"&chid="+title, function(data, status)
+      $.get("getTitle.php?data=title&id="+Cid+"&cilos="+cilos , function(data, status)
       {
+        //alert(cilos);
         //alert("Data: " + fact + "\nStatus: " + status); 
           $("#drop").empty(); 
           $('#drop').append(data);
@@ -191,7 +192,7 @@ function getData(data)
     {
       // alert(title);
       // alert(Cid);
-      $.get("getSubTopic.php?data=title&chapterid="+title+"&id="+Cid, function(data, status)
+      $.get("getAlias.php?data=title&chapterid="+title+"&id="+Cid, function(data, status)
       {
         //alert("Data: " + fact + "\nStatus: " + status); 
           $("#sub").empty(); 
@@ -245,6 +246,25 @@ function getInfo()
         return false;
         
       }
+      
+  function getProgram() 
+  {
+    var program = document.getElementById('program').value;
+    var table = document.getElementById('table').value;
+    $("#table").empty();
+    //alert(program);
+    if (program > 0)
+    {
+      $.get("getProgramSub.php?data=pro&pro="+program, function(data, status)
+          {
+            //alert("Data: " + fact + "\nStatus: " + status); 
+              $("#table").empty(); 
+              $('#table').append(data);
+          });
+      
+    }
+    else return false;
+  }
 function getType()
   {
     //alert('dones');
@@ -264,6 +284,36 @@ function getType()
     else
     return false;
     
+  }
+  function change() 
+  {
+    var change = document.getElementById('change').value;
+    var table = document.getElementById('table').value;
+    $("#table").empty();
+    if (change == 1) 
+    {
+      
+      $.get("getTableLecturer.php?data=change", function(data, status)
+      {
+        //alert(change);
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#table").empty(); 
+          $('#table').append(data);
+      });
+    }
+    if (change == 2) 
+    {
+      $.get("getTableOutLecturer.php?data=change", function(data, status)
+      {
+        //alert(change);
+        //alert("Data: " + fact + "\nStatus: " + status); 
+          $("#table").empty(); 
+          $('#table').append(data);
+      });
+    }
+    else return false;
+    
+    //alert(change);
   }
     
   function getSubject()

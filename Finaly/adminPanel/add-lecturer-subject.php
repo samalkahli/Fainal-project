@@ -10,6 +10,9 @@ if (strlen($_SESSION['id']==0))
   }
   else{ 
         $Suid = $_GET['id'];
+        $queryLe =mysqli_query($conn, "UPDATE subject set
+                    status = 'active'
+                    where Su_ID = '$Suid'");
         $querysu = "SELECT *
                     FROM sub_lec
                     where Su_ID = '$Suid'";

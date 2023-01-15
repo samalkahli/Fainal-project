@@ -13,6 +13,7 @@ if (strlen($_SESSION['id'] == 0)) {
     $time = '';
     $subject = '';
     $mark = '';
+    $number = '';
     $errors = array();
 
     if (empty($_POST['type'])) {
@@ -36,9 +37,14 @@ if (strlen($_SESSION['id'] == 0)) {
     } else {
       $subject = mysqli_real_escape_string($conn, trim($_POST['subject']));
     }
+    if (empty($_POST['number'])) {
+      $errors[] = 'select number';
+    } else {
+      $number = mysqli_real_escape_string($conn, trim($_POST['number']));
+    }
 
     if (empty($errors)) {
-      $query = "INSERT INTO exam (Ex_Type, Ex_Mark, Ex_Duration, Ex_Date, Su_ID) VALUES ('$type','$mark','$time',NOW(),'$subject')";
+      $query = "INSERT INTO exam (Ex_Type, Ex_Mark, Ex_NumberQ, Ex_Duration, Ex_Date, Su_ID) VALUES ('$type','$mark', '$number','$time',NOW(),'$subject')";
       $r = mysqli_query($conn, $query);
 
       if ($r) {
@@ -186,6 +192,11 @@ if (strlen($_SESSION['id'] == 0)) {
                                 <option value="50">Fifty Marks</option>
                                 <option value="60">Sixty Marks</option>
                               </select>
+
+                            </div>
+                            <div class="field padding-bottom--24">
+                              <label>Number Of Question</label>
+                              <input type="number" name="number" placeholder="Select Number Of Question..." max="50" min="10" >
 
                             </div>
                             <!-- <div id="fa" class="field padding-bottom--24" style="display: none;">

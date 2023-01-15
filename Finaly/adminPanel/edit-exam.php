@@ -75,8 +75,8 @@ if (strlen($_SESSION['id'] == 0)) {
                 {
                     $row = $xlsx->rows($k)[$i];
                     $query = "INSERT into question
-                            (Qu_Text, Qu_Mark, Qu_Type, Qu_A, Qu_B, Qu_C, Qu_D, Qu_Answer, Ex_ID) values
-                            ('$row[0]','$row[1]','$she','$row[2]','$row[3]','$row[4]','$row[5]','$row[6]', $E_ID)";
+                            (Qu_Text,  Qu_Type, Qu_A, Qu_B, Qu_C, Qu_D, Qu_Answer, Ex_ID) values
+                            ('$row[0]','$row[1]','$she','$row[2]','$row[3]','$row[4]','$row[5]', $E_ID)";
                     $res = mysqli_query($conn, $query);
                     //var_dump($query);
                 } 
@@ -84,7 +84,7 @@ if (strlen($_SESSION['id'] == 0)) {
                 {
                     $row = $xlsx->rows($k)[$i];
                     $query = "INSERT into question
-                              (Qu_Text, Qu_Mark, Qu_Type, Qu_Answer, Ex_ID) values ('$row[0]','$row[1]','$she','$row[2]', $E_ID)";
+                              (Qu_Text,  Qu_Type, Qu_Answer, Ex_ID) values ('$row[0]','$row[1]','$she', $E_ID)";
                     $res = mysqli_query($conn, $query);
                     //var_dump($query);
                 }
@@ -110,7 +110,6 @@ if (strlen($_SESSION['id'] == 0)) {
   if (isset($_POST['new'])) {
     //var_dump($_SESSION);
     $text =  '';
-    $markQ = '';
     $typeQ = '';
     $qA = null;
     $qB = null;
@@ -123,11 +122,6 @@ if (strlen($_SESSION['id'] == 0)) {
       $errors[] = 'select question';
     } else {
       $text = mysqli_real_escape_string($conn, trim($_POST['question']));
-    }
-    if (empty($_POST['markq'])) {
-      $errors[] = 'select mark';
-    } else {
-      $markQ = mysqli_real_escape_string($conn, trim($_POST['markq']));
     }
     if (empty($_POST['typeq'])) {
       $errors[] = 'select type';
@@ -158,11 +152,14 @@ if (strlen($_SESSION['id'] == 0)) {
     }
     if (empty($_POST['answer'])) {
       $errors[] = 'select answer';
-    } else {
+    } 
+    else 
+    {
       $answer = mysqli_real_escape_string($conn, trim($_POST['answer']));
     }
-    if (empty($errors)) {
-      $query = "INSERT INTO question (Qu_Text, Qu_Mark, Qu_Type, Qu_A, Qu_B, Qu_C, Qu_D, Qu_Answer, Ex_ID) VALUES ('$text', '$markQ', '$typeQ' ,'$qA' ,'$qB' ,'$qC' ,'$qD' ,'$answer' ,$E_ID )";
+    if (empty($errors)) 
+    {
+      $query = "INSERT INTO question (Qu_Text, Qu_Type, Qu_A, Qu_B, Qu_C, Qu_D, Qu_Answer, Ex_ID) VALUES ('$text', '$typeQ' ,'$qA' ,'$qB' ,'$qC' ,'$qD' ,'$answer' ,$E_ID )";
       $resQ = mysqli_query($conn, $query);
       //var_dump($query);
       if ($resQ) {
@@ -410,15 +407,7 @@ if (strlen($_SESSION['id'] == 0)) {
 
                           </select>
                         </div> -->
-                        <div class="field padding-bottom--24">
-                          <label>Mark</label>
-                          <select class="form-control" name="markq" required>
-                            <option value="0">Select Mark :</option>
-                            <option value="5">Five Marks</option>
-                            <option value="10">Ten Marks</option>
-                            <option value="20">Twinty Marks</option>
-                          </select>
-                        </div>
+                        
                         <div class="field padding-bottom--24">
                           <label>Type Of Question</label>
                           <select class="form-control" id="type" name="typeq" onchange="getType()">
