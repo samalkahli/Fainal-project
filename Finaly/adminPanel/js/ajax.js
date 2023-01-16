@@ -229,13 +229,17 @@ function getData(data)
 }
 function getInfo()
       {
-        var que = document.getElementById('que').value;
+        var que = document.getElementById('chapterCilos').value;
+        var cilo = document.getElementById('que').value;
         var info = document.getElementById('info').value;
+        //alert(cilo);
         $('#info').empty();
         if (que > 0)
         {
-          $.get("getInfo.php?data=que&que="+que, function(data, status)
+          
+          $.get("getInfo.php?data=que&que="+que+" & cil="+cilo, function(data, status)
           {
+            //alert(cilo);
             //alert("Data: " + fact + "\nStatus: " + status); 
               $("#info").empty(); 
               $('#info').append(data);

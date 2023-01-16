@@ -26,6 +26,13 @@ if (strlen($_SESSION['id']==0))
            
        <?php }
        else {
+        if (isset($_POST['delQ']))
+ {
+  $que = $_POST['quee'];
+    mysqli_query($conn, "DELETE from question where Qu_ID = $que");
+    echo '<script>alert("Lecturer Record Deleted Successfully !!")</script>';
+    //echo '<script>window.location.href=manage-lecturer.php</script>';
+  }
   if (isset($_POST['del']))
   {
     $k = $_POST['alias'];
@@ -200,6 +207,25 @@ if (strlen($_SESSION['id']==0))
     
 
   }
+  if (isset($_POST['delLink']))
+     {
+      $idLink = $_POST['idLink'];
+      $Qu = $_POST['idQu'];
+      $r = count($idLink);
+      $s = count($Qu);
+      //var_dump($r);
+      for($i = 0 ; $i < $r && $i < $s ; $i++ )
+      {
+        $query = "DELETE FROM cilo_que where CQu_ID = '$idLink[$i]'";
+        $res = mysqli_query($conn,$query);
+        $update =mysqli_query($conn, "UPDATE question set status = 'noactive' where Qu_ID = '$Qu[$i]'");
+        //var_dump($query,$update);
+      }
+
+      ?>   
+      <script> alert("done.");</script>
+      <?php
+     }
   if (isset($_POST['new']))
      {
         //var_dump($_SESSION);
@@ -277,6 +303,21 @@ if (strlen($_SESSION['id']==0))
 
       }?>
       <script>alert("Relationship Add S");</script>
+
+   <?php }
+   if (isset($_POST['link']))
+   {
+    $Qu = $_POST['ques'];
+    $Ci = $_POST['quee'];
+    foreach($Qu as $k)
+    {
+      $update = "UPDATE question set status = 'active' where Qu_ID = '$k'";
+      $query = "INSERT INTO cilo_que (Qu_ID, C_ID) values('$k','$Ci')";
+      $resUp = mysqli_query($conn,$update);
+      $res = mysqli_query($conn,$query);
+      //var_dump($query,$update);
+    }?>
+      <script>alert("CILOs Linked With Question");</script>
 
    <?php }
     if (isset($_POST['submit']))
@@ -373,8 +414,8 @@ if (strlen($_SESSION['id']==0))
       <?php include('sidebar.php'); ?>
       <!-- partial -->
       
-      <div class="main-panel"> 
-        <div class="content-wrapper">
+      <div class="main-panel">
+      <div class="content-wrapper">
           <div class="row">
             <div class="col-md-6">
               <!-- here the code-->
@@ -430,14 +471,6 @@ if (strlen($_SESSION['id']==0))
                 </div>
               </div>
             </div>
-
-
-
-
-
-
-
-
             <div class="col-md-6">
               <!-- here the code-->
               <div class="card">
@@ -466,7 +499,7 @@ if (strlen($_SESSION['id']==0))
                                 <label>The Chapter</label>
                                 <input type="number" name="chapterCilo" id="chapterNo" onchange="getData('subtopic')" title="Plase Select The Chapter" placeholder="Select The Chapter Number..." min="1" max="<?php echo $row['Su_Chapter'];?>">
                               </div>
-                              <div id="sub" class=" padding-bottom--24">
+                              <div id="sub" >
                                  
                               </div>
                              <?php 

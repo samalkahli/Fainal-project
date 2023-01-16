@@ -89,8 +89,7 @@
       </a>
       <div class="collapse" id="test">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="connect_questions.php">Connect Questions</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">Manage Question</a></li>
+          <li class="nav-item"> <a class="nav-link" href="manage-question.php">Manage Question</a></li>
         </ul>
       </div>
     </li>
